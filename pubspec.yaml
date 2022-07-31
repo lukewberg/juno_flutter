@@ -35,7 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.3
-  flutter_webrtc: ^0.8.12
+  flutter_webrtc: ^0.9.0
   pubnub: ^4.2.1
   flutter_svg: ^1.0.3
   font_awesome_flutter: ^10.1.0

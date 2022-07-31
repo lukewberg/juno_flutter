@@ -29,9 +29,10 @@ class MyApp extends StatelessWidget {
         home: const Navigator(
           pages: [
             MaterialPage(
+              key: ValueKey('HomePage'),
               child: MyHomePage(title: 'Flutter Demo Home Page'),
             ),
-          ],
+          ]
         ));
   }
 }
@@ -77,10 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: JunoAppbar(),
-      ),
+      appBar: const JunoAppbar(),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.

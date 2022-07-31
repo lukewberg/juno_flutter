@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class JunoAppbar extends StatefulWidget {
+class JunoAppbar extends StatefulWidget with PreferredSizeWidget {
   const JunoAppbar({Key? key}) : super(key: key);
 
   @override
   State<JunoAppbar> createState() => _JunoAppbarState();
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size.fromHeight(50);
 }
 
 class _JunoAppbarState extends State<JunoAppbar> {
