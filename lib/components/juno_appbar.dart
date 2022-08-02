@@ -18,11 +18,9 @@ class _JunoAppbarState extends State<JunoAppbar> {
     return DecoratedBox(
         decoration: const BoxDecoration(
             color: Color(0xff271836),
-            boxShadow: [BoxShadow(
-              color: Colors.grey,
-              blurRadius: 20,
-              spreadRadius: 1
-            )],
+            boxShadow: [
+              BoxShadow(color: Colors.grey, blurRadius: 20, spreadRadius: 1)
+            ],
             gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
@@ -38,7 +36,7 @@ class _JunoAppbarState extends State<JunoAppbar> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SvgPicture.asset(
-                      'assets/img/juno_logo_white.svg',
+                      'assets/img/juno_logo.svg',
                       height: 40,
                       color: Colors.white,
                     ),

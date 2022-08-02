@@ -1,41 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:juno_flutter/components/juno_appbar.dart';
+import 'package:juno_flutter/pages/login_page.dart';
+import 'package:juno_flutter/providers/app_provider.dart';
+import 'package:juno_flutter/providers/auth_provider.dart';
+import 'package:juno_flutter/router/app_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late AppProvider appProvider;
+  late AuthProvider authProvider;
+
+  @override
+  void initState() {
+    appProvider = AppProvider();
+    authProvider = AuthProvider();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-          fontFamily: 'NunitoSans',
-        ),
-        home: const Navigator(
-          pages: [
-            MaterialPage(
-              key: ValueKey('HomePage'),
-              child: MyHomePage(title: 'Flutter Demo Home Page'),
-            ),
-          ]
-        ));
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) => authProvider),
+        Provider(create: (_) => appProvider),
+        Provider(create: (_) => AppRouter(appProvider, authProvider))
+      ],
+      child: Builder(
+        builder: (context) {
+          final GoRouter goRouter =
+              Provider.of<AppRouter>(context, listen: false).router;
+          return MaterialApp.router(
+              routerDelegate: goRouter.routerDelegate,
+              routeInformationParser: goRouter.routeInformationParser,
+              routeInformationProvider: goRouter.routeInformationProvider,
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                // This is the theme of your application.
+                //
+                // Try running your application with "flutter run". You'll see the
+                // application has a blue toolbar. Then, without quitting the app, try
+                // changing the primarySwatch below to Colors.green and then invoke
+                // "hot reload" (press "r" in the console where you ran "flutter run",
+                // or simply save your changes to "hot reload" in a Flutter IDE).
+                // Notice that the counter didn't reset back to zero; the application
+                // is not restarted.
+                primarySwatch: Colors.blue,
+                fontFamily: 'NunitoSans',
+              ));
+        },
+      ),
+    );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
