@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:juno_flutter/components/action_button.dart';
 import 'package:juno_flutter/components/juno_appbar.dart';
+import 'package:juno_flutter/components/text_input.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,27 +16,57 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        body: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  stops: [
-                    0.25,
-                    0.5,
-                    0.75
-                  ],
-                  colors: [
-                    Color(0xff6F67AE),
-                    Color(0xffBF2E92),
-                    Color(0xffE26B76)
-                  ]),
-            ),
-            child: SafeArea(
-              child: Center(
-                child: Text('Hello world!'),
+    return Scaffold(
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              colors: [
+                Color(0xff271836),
+                Color(0xff6F67AE),
+                Color(0xffE26B76)
+              ]),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/img/juno_logo.svg',
+                    color: Colors.white,
+                  ),
+                  const Text(
+                    'Sign in',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 30,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const TextInput(
+                      placeholder: 'Magic link',
+                      inputType: TextInputType.text,
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  ActionButton(),
+                ],
               ),
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
