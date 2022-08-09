@@ -7,7 +7,8 @@ class TextInput extends StatefulWidget {
   final String? placeholder;
   final TextInputType? inputType;
   final bool? password;
-  const TextInput({Key? key, this.placeholder, this.inputType, this.password}) : super(key: key);
+  final TextEditingController? controller;
+  const TextInput({Key? key, this.placeholder, this.inputType, this.password, this.controller}) : super(key: key);
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -43,6 +44,7 @@ class _TextInputState extends State<TextInput> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           hintText: widget.placeholder,
         ),
+        controller: widget.controller,
       ),
     );
   }

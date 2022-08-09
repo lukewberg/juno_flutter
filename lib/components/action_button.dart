@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ActionButton extends StatefulWidget {
+  final String text;
   final double? width;
-  const ActionButton({Key? key, this.width}) : super(key: key);
+  final Color? color;
+  const ActionButton(this.text, {Key? key, this.width, this.color}) : super(key: key);
 
   @override
   State<ActionButton> createState() => _ActionButtonState();
@@ -16,7 +18,7 @@ class _ActionButtonState extends State<ActionButton> {
         width: widget.width ?? double.infinity,
         child: DecoratedBox(
             decoration: BoxDecoration(
-              color: Color(0xff6F67AE),
+              color: widget.color ?? const Color(0xff6F67AE),
               borderRadius: BorderRadius.circular(10),
               boxShadow: const [
                 BoxShadow(
@@ -29,9 +31,9 @@ class _ActionButtonState extends State<ActionButton> {
                 horizontal: 25,
                 vertical: 10,
               ),
-              child: const Text(
-                'Log In',
-                style: TextStyle(
+              child: Text(
+                widget.text,
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
