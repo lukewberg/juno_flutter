@@ -1,8 +1,6 @@
-import 'dart:html';
-
 abstract class API {
 
-  void getConfig(Url magicLink);
+  void getSite(Uri magicLink);
 
   void getRoutes();
 
@@ -11,5 +9,7 @@ abstract class API {
   void getSession();
 
   void queryContent();
+
+  void tokenLogin(Uri magicLink);
   
 }

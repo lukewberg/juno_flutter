@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:juno_flutter/api/legacy_api.dart';
 import 'package:juno_flutter/components/action_button.dart';
 import 'package:juno_flutter/components/juno_appbar.dart';
 import 'package:juno_flutter/components/text_input.dart';
@@ -69,7 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  const ActionButton('Log in'),
+                  ActionButton('Log in', () {
+                    LegacyAPI().getSite(Uri.parse(magicLinkController.text));
+                  }),
                 ],
               ),
             ),
