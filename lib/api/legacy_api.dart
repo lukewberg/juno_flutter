@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:juno_flutter/api/models/user.dart';
+import 'package:juno_flutter/utils/api_route.dart';
+import 'package:juno_flutter/utils/api_route_extension.dart';
 import 'package:juno_flutter/utils/network.dart';
-
-import '../utils/request_type.dart';
+import 'package:juno_flutter/utils/request_type.dart';
 
 class LegacyAPI with Network implements API {
   static final LegacyAPI _legacyAPI = LegacyAPI._internal();
@@ -24,15 +25,20 @@ class LegacyAPI with Network implements API {
     var user = User.fromJsonLegacy(
         jsonDecode((await tokenLogin(magicLink)).body)['user']);
 
-    var result = await fetch(REQUEST_TYPE.post,
-        Uri.parse('https://$host/custom_api/api_Services_SMC.php'), {
-      'api': 'site_management_console',
-      'user_id': user.userId,
-      'token': token,
-      'app': '1'
-    });
+    var result = await fetch(
+        REQUEST_TYPE.post,
+        Uri.parse(
+            'https://$host/${API_ROUTE.custom.path}/api_Services_SMC.php'),
+        {
+          'api': 'site_management_console',
+          'user_id': user.userId,
+          'token': token,
+          'app': '1'
+        });
 
-    parseConfig(jsonDecode(result.body) as Map<String, dynamic>);
+    var smcPayload = jsonDecode(result.body);
+    var config = jsonDecode(smcPayload['config']['config_config']);
+    parseConfig(config);
   }
 
   @override
@@ -60,8 +66,12 @@ class LegacyAPI with Network implements API {
     //  TODO: implement getNavigation
   }
 
-  void parseConfig(dynamic json) {
-    json['config'].forEach((k, v) => print("Key : $k, Value : $v"));
+  void parseConfig(dynamic config) {
+    config['NAVIGATION'].forEach((k, v) => print("Key : $k, Value : $v"));
+  }
+
+  void parseNav(Map<String, dynamic> navItem) {
+
   }
 
   @override
@@ -76,9 +86,11 @@ class LegacyAPI with Network implements API {
       'magic_link_domain': host,
       'app': '1',
     };
+
     var result = fetch(
       REQUEST_TYPE.post,
-      Uri.parse('https://$host/crowdhub_api_v2/api_user_login_by_token.php'),
+      Uri.parse(
+          'https://$host/${API_ROUTE.v2.path}/api_user_login_by_token.php'),
       body,
     );
     return result;
