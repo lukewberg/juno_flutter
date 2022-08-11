@@ -11,5 +11,6 @@ abstract class API {
   void queryContent();
 
   void tokenLogin(Uri magicLink);
-  
+
+  void getNavigation();
 }

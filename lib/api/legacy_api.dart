@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:juno_flutter/api/models/user.dart';
+import 'package:juno_flutter/utils/network.dart';
 
-class LegacyAPI implements API {
+import '../utils/request_type.dart';
+
+class LegacyAPI with Network implements API {
   static final LegacyAPI _legacyAPI = LegacyAPI._internal();
 
   factory LegacyAPI() {
@@ -18,16 +21,18 @@ class LegacyAPI implements API {
     var host = magicLink.pathSegments[1];
     var token = magicLink.pathSegments[2];
 
-    var user =
-        User.fromJsonLegacy(jsonDecode((await tokenLogin(magicLink)).body)['user']);
+    var user = User.fromJsonLegacy(
+        jsonDecode((await tokenLogin(magicLink)).body)['user']);
 
-    var result = await fetch(Uri.parse('https://$host/custom_api/api_Services_SMC.php'), {
+    var result = await fetch(REQUEST_TYPE.post,
+        Uri.parse('https://$host/custom_api/api_Services_SMC.php'), {
       'api': 'site_management_console',
       'user_id': user.userId,
       'token': token,
       'app': '1'
     });
-    print(result.body);
+
+    parseConfig(jsonDecode(result.body) as Map<String, dynamic>);
   }
 
   @override
@@ -51,6 +56,15 @@ class LegacyAPI implements API {
   }
 
   @override
+  void getNavigation() {
+    //  TODO: implement getNavigation
+  }
+
+  void parseConfig(dynamic json) {
+    json['config'].forEach((k, v) => print("Key : $k, Value : $v"));
+  }
+
+  @override
   Future<http.Response> tokenLogin(Uri magicLink) {
     var host = magicLink.pathSegments[1];
     var token = magicLink.pathSegments[2];
@@ -60,15 +74,13 @@ class LegacyAPI implements API {
       'token': token,
       'magic_link_reroute': reroute ?? '/main',
       'magic_link_domain': host,
-      'app': '1'
+      'app': '1',
     };
     var result = fetch(
-        Uri.parse('https://$host/crowdhub_api_v2/api_user_login_by_token.php'),
-        body);
+      REQUEST_TYPE.post,
+      Uri.parse('https://$host/crowdhub_api_v2/api_user_login_by_token.php'),
+      body,
+    );
     return result;
-  }
-
-  Future<http.Response> fetch(Uri endpoint, Map<String, String> body) {
-    return http.post(endpoint, body: body);
   }
 }

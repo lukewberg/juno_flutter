@@ -1,17 +1,50 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user.g.dart';
+
+@JsonSerializable()
 class User {
+
+  @JsonKey(name: 'user_firstname')
   final String firstName;
+
+  @JsonKey(name: 'user_lastname')
   final String lastName;
+
+  @JsonKey(name: 'user_email')
   final String email;
+
+  @JsonKey(name: 'user_id')
   final String userId;
+
+  @JsonKey(name: 'user_username')
   final String username;
+
+  @JsonKey(name: 'user_accountlevel')
   final String accountLevel;
+
+  @JsonKey(name: 'user_city')
   final String city;
+
+  @JsonKey(name: 'user_state')
   final String state;
+
+  @JsonKey(name: 'user_address')
   final String address;
+
+  @JsonKey(name: 'user_company')
   final String company;
+
+  @JsonKey(name: 'user_dateofbirth')
   final String birthday;
+
+  @JsonKey(name: 'user_avatar')
   final String avatar;
+
+  @JsonKey(name: 'chat_key')
   final String chatKey;
+
+  @JsonKey(name: 'chat_room')
   final String chatRoom;
 
   const User({
@@ -28,25 +61,10 @@ class User {
     required this.birthday,
     required this.avatar,
     required this.chatKey,
-    required this.chatRoom
+    required this.chatRoom,
   });
 
-  factory User.fromJsonLegacy(Map<String, dynamic> json) {
-    return User(
-      firstName: json['user_firstname'],
-      lastName: json['user_lastname'],
-      email: json['user_email'],
-      userId: json['user_id'],
-      username: json['user_username'],
-      accountLevel: json['user_accountlevel'],
-      city: json['user_city'],
-      state: json['user_state'],
-      address: json['user_address'],
-      company: json['user_company'],
-      birthday: json['user_dateofbirth'],
-      avatar: json['user_avatar'],
-      chatKey: json['chat_key'],
-      chatRoom: json['chat_room'],
-    );
-  }
+  factory User.fromJsonLegacy(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
