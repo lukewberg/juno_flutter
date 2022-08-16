@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juno_flutter/router/navigation.dart';
 
 typedef void OnTap();
 
@@ -50,4 +51,8 @@ class _ActionButtonState extends State<ActionButton> {
       ),
     );
   }
+}
+
+class ActionButtonConfig extends ComponentConfig {
+
 }

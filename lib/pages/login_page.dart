@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 25,
                   ),
                   TextInput(
                       placeholder: 'Magic link',
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: magicLinkController,
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 25,
                   ),
                   ActionButton('Log in', () {
                     LegacyAPI().getSite(Uri.parse(magicLinkController.text));

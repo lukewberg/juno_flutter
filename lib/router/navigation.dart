@@ -1,23 +1,23 @@
+import 'package:juno_flutter/components/action_button.dart';
+
 class Navigation {}
 
 class NavItem {
-  final String as;
   final String? name;
-  final String path;
+  final String route;
   final String type;
   final Map<String, dynamic>? data;
   final List<NavItem> children;
 
   NavItem(
-    this.as,
-    this.path,
+    this.name,
+    this.route,
     this.type,
     this.children, {
-    this.name,
     this.data,
   });
 }
 
 class ComponentConfig {
-
+  ComponentConfig();
 }
