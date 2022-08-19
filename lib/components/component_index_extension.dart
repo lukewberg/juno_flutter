@@ -4,18 +4,18 @@ import 'package:juno_flutter/components/carousel.dart';
 import 'package:juno_flutter/components/component_index.dart';
 import 'package:juno_flutter/router/navigation.dart';
 
-typedef ComponentConfig configBuilder(BuildContext context, dynamic config);
+typedef ComponentConfig configBuilder(Map<String, dynamic> config);
 typedef Widget componentBuilder(BuildContext context, dynamic config);
 
 extension ComonentIndexExtension on COMPONENT_INDEX {
   configBuilder get config {
     switch (this) {
       case COMPONENT_INDEX.actionButton:
-        return (context, config) => ActionButtonConfig(config);
+        return (config) => ActionButtonConfig(config);
       case COMPONENT_INDEX.carousel:
-        return (context, config) => CarouselConfig(config);
+        return (config) => CarouselConfig(config);
       default:
-        return (context, config) => ComponentConfig();
+        return (config) => ComponentConfig();
     }
   }
 

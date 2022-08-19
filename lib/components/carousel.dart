@@ -33,5 +33,5 @@ class _CarouselState extends State<Carousel> {
 class CarouselConfig extends ComponentConfig {
   final List<Widget> slides;
 
-  CarouselConfig(this.slides);
+  CarouselConfig(super.rawConfig, this.slides);
 }

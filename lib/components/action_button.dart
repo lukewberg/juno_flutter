@@ -55,7 +55,5 @@ class _ActionButtonState extends State<ActionButton> {
 }
 
 class ActionButtonConfig extends ComponentConfig {
-  final String test;
-
-  ActionButtonConfig(this.test);
+  ActionButtonConfig(super.rawConfig);
 }
