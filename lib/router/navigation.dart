@@ -1,20 +1,28 @@
 import 'package:juno_flutter/components/component_index.dart';
 
-class Navigation {}
+import 'app_page.dart';
+
+class Navigation {
+  final List<NavItem> routes;
+
+  Navigation(this.routes);
+}
 
 class NavItem {
   final String? name;
   final String route;
-  final String type;
-  final List<NavItem> subRoutes;
+  final APP_PAGE type;
+  final List<NavItem>? subRoutes;
   final List<ComponentSeed> components;
 
   NavItem(
     this.name,
     this.route,
     this.type,
-    this.subRoutes,
     this.components,
+  {
+    this.subRoutes
+  }
   );
 }
 

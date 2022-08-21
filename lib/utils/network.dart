@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:juno_flutter/utils/api_route.dart';
 import 'package:juno_flutter/utils/request_type.dart';
 
 //  Use as a mixin

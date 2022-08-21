@@ -13,9 +13,9 @@ extension ComonentIndexExtension on COMPONENT_INDEX {
       case COMPONENT_INDEX.actionButton:
         return (config) => ActionButtonConfig(config);
       case COMPONENT_INDEX.carousel:
-        return (config) => CarouselConfig(config);
+        return (config) => CarouselConfig(config, []);
       default:
-        return (config) => ComponentConfig();
+        return (config) => ComponentConfig(config);
     }
   }
 
