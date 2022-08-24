@@ -70,17 +70,16 @@ class LegacyAPI with Network implements API {
     //  TODO: implement getNavigation
   }
 
-  void parseConfig(Map<String, dynamic> config) {
-
-  }
+  void parseConfig(Map<String, dynamic> config) {}
 
   Navigation parseNav(List<dynamic> rawNav) {
     List<NavItem> navItems = [];
     List<ComponentSeed> components = [];
 
     for (var nav in rawNav) {
-      if ((nav['data'])['elements'] != null) {
-        for (var rawComponent in nav['data']['elements']) {
+      components.clear();
+      if (nav['data'] is Map && nav['data']['elements'] is Map) {
+        nav['data']['elements'].forEach((rawComponent) {
           ComponentSeed component;
           switch (rawComponent['type']) {
             case 'featured_rotator':
@@ -92,12 +91,16 @@ class LegacyAPI with Network implements API {
                   ComponentSeed(COMPONENT_INDEX.carousel, rawComponent['data']);
           }
           components.add(component);
-        }
+        });
       }
       switch (nav['as']) {
         case 'navigate.live.home':
-          navItems.add(NavItem(APP_PAGE.home.name, APP_PAGE.home.path,
-              APP_PAGE.home, components));
+          navItems.add(NavItem(nav['name'], APP_PAGE.home.path,
+              APP_PAGE.home, [...components]));
+          break;
+        case 'navigate.default.slug':
+          navItems.add(NavItem(nav['name'], APP_PAGE.content.path,
+              APP_PAGE.content, [...components]));
           break;
         default:
           break;
