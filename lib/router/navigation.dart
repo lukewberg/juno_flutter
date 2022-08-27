@@ -1,4 +1,5 @@
 import 'package:juno_flutter/components/component_index.dart';
+import 'package:juno_flutter/utils/api_route.dart';
 
 import 'app_page.dart';
 
@@ -33,7 +34,19 @@ class ComponentSeed {
   ComponentSeed(this.type, this.rawConfig);
 }
 
-class ComponentConfig {
+abstract class ComponentConfig<T> {
   final Map<String, dynamic> rawConfig;
+
   ComponentConfig(this.rawConfig);
+}
+
+class ComponentApiConfig {
+  final String endpoint;
+  final API_ROUTE apiVersion;
+  final Map<String, dynamic>? tags;
+  final Map<String, dynamic>? contentType;
+  final int? id;
+
+  ComponentApiConfig(this.endpoint, this.apiVersion,
+      {this.tags, this.contentType, this.id});
 }

@@ -5,10 +5,11 @@ import 'package:juno_flutter/router/navigation.dart';
 part 'grid_config.g.dart';
 
 @JsonSerializable()
-class GridConfig extends ComponentConfig{
+class GridConfig extends ComponentConfig {
+  final ComponentApiConfig apiConfig;
 
-  GridConfig(super.rawConfig);
+  GridConfig(super.rawConfig, this.apiConfig);
 
-  factory GridConfig.fromJsonLegacy(Map<String, dynamic> json) => _$GridConfigFromJson(json);
-
+  factory GridConfig.fromJsonLegacy(Map<String, dynamic> json) =>
+      _$GridConfigFromJson(json);
 }

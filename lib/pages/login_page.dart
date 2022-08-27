@@ -15,7 +15,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final magicLinkController = TextEditingController();
 
   @override
@@ -23,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
     magicLinkController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,9 +63,10 @@ class _LoginPageState extends State<LoginPage> {
                     height: 25,
                   ),
                   TextInput(
-                      placeholder: 'Magic link',
-                      inputType: TextInputType.text,
-                      controller: magicLinkController,
+                    placeholder: 'Magic link',
+                    inputType: TextInputType.text,
+                    controller: magicLinkController,
+                    prefixText: '✨',
                   ),
                   const SizedBox(
                     height: 25,

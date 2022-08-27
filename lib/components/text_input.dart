@@ -5,10 +5,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TextInput extends StatefulWidget {
   final String? placeholder;
+  final String? prefixText;
   final TextInputType? inputType;
   final bool? password;
   final TextEditingController? controller;
-  const TextInput({Key? key, this.placeholder, this.inputType, this.password, this.controller}) : super(key: key);
+
+  const TextInput(
+      {Key? key,
+      this.placeholder,
+      this.inputType,
+      this.password,
+      this.controller,
+      this.prefixText})
+      : super(key: key);
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -26,9 +35,7 @@ class _TextInputState extends State<TextInput> {
       ),
       child: TextField(
         obscureText: widget.password ?? false,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold
-        ),
+        style: const TextStyle(fontWeight: FontWeight.bold),
         keyboardType: widget.inputType,
         decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -41,8 +48,10 @@ class _TextInputState extends State<TextInput> {
           fillColor: Colors.white,
           filled: true,
           hoverColor: Colors.green,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           hintText: widget.placeholder,
+          prefixText: widget.prefixText ?? '',
         ),
         controller: widget.controller,
       ),
