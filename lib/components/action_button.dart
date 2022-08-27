@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:juno_flutter/components/action_button.dart';
 import 'package:juno_flutter/router/navigation.dart';
 
-typedef void OnTap();
+typedef OnTap = void Function();
 
 class ActionButton extends StatefulWidget {
   final String text;

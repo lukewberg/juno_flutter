@@ -9,9 +9,9 @@ class ComponentBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> components = [];
-    componentSeeds.forEach((component) {
+    for (var component in componentSeeds) {
       component.type.config(component.rawConfig);
-    });
+    }
     return Container();
   }
 }

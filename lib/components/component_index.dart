@@ -3,5 +3,7 @@ enum COMPONENT_INDEX {
   junoAppbar,
   junoIconButton,
   textInput,
-  carousel
+  carousel,
+  grid,
+  blurb,
 }

@@ -78,13 +78,17 @@ class LegacyAPI with Network implements API {
 
     for (var nav in rawNav) {
       components.clear();
-      if (nav['data'] is Map && nav['data']['elements'] is Map) {
+      if (nav['data'] is Map && nav['data']['elements'] is List<dynamic>) {
         nav['data']['elements'].forEach((rawComponent) {
           ComponentSeed component;
           switch (rawComponent['type']) {
             case 'featured_rotator':
               component =
                   ComponentSeed(COMPONENT_INDEX.carousel, rawComponent['data']);
+              break;
+            case 'grid':
+              component =
+                  ComponentSeed(COMPONENT_INDEX.grid, rawComponent['data']);
               break;
             default:
               component =
@@ -95,8 +99,8 @@ class LegacyAPI with Network implements API {
       }
       switch (nav['as']) {
         case 'navigate.live.home':
-          navItems.add(NavItem(nav['name'], APP_PAGE.home.path,
-              APP_PAGE.home, [...components]));
+          navItems.add(NavItem(
+              nav['name'], APP_PAGE.home.path, APP_PAGE.home, [...components]));
           break;
         case 'navigate.default.slug':
           navItems.add(NavItem(nav['name'], APP_PAGE.content.path,
