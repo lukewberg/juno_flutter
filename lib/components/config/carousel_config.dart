@@ -5,9 +5,9 @@ part 'carousel_config.g.dart';
 
 @JsonSerializable()
 class CarouselConfig extends ComponentConfig {
-  final List<dynamic> slides;
+  final List<dynamic> slideConfigs;
 
-  CarouselConfig(super.rawConfig, this.slides);
+  CarouselConfig(rawConfig, this.slideConfigs): super(rawConfig: rawConfig);
 
   factory CarouselConfig.fromJsonLegacy(Map<String, dynamic> json) => _$CarouselConfigFromJson(json);
 

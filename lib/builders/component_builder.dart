@@ -10,7 +10,7 @@ class ComponentBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> components = [];
     for (var component in componentSeeds) {
-      component.type.config(component.rawConfig);
+      component.type.legacyConfig(component.rawConfig);
     }
     return Container();
   }

@@ -1,4 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:juno_flutter/components/component_index.dart';
+import 'package:juno_flutter/router/navigation.dart';
 import 'package:juno_flutter/utils/api_route.dart';
 
 import 'app_page.dart';
@@ -34,19 +36,41 @@ class ComponentSeed {
   ComponentSeed(this.type, this.rawConfig);
 }
 
-abstract class ComponentConfig<T> {
+class ComponentConfig<T> {
   final Map<String, dynamic> rawConfig;
+  final ComponentApiConfig? apiConfig;
 
-  ComponentConfig(this.rawConfig);
+  ComponentConfig({required this.rawConfig, this.apiConfig});
 }
 
 class ComponentApiConfig {
   final String endpoint;
   final API_ROUTE apiVersion;
   final Map<String, dynamic>? tags;
+  final Map<String, dynamic>? buckets;
   final Map<String, dynamic>? contentType;
   final int? id;
 
   ComponentApiConfig(this.endpoint, this.apiVersion,
-      {this.tags, this.contentType, this.id});
+      {this.tags, this.buckets, this.contentType, this.id});
+}
+
+class ComponentApiConfigConverter extends JsonConverter<ComponentApiConfig, Map<String, dynamic>> {
+  @override
+  ComponentApiConfig fromJson(Map<String, dynamic> json) {
+    return ComponentApiConfig(
+      json['endpoint'],
+      API_ROUTE.values.firstWhere((e) => e.toString() == json['apiVersion']),
+      tags: json['tags'],
+      contentType: json['contentType'],
+      id: json['id'],
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(ComponentApiConfig object) {
+    // TODO: implement toJson
+    throw UnimplementedError();
+  }
+
 }

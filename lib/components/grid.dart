@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
+import 'package:juno_flutter/router/navigation.dart';
 
 class Grid extends StatelessWidget {
-  // final List<dynamic> children;
-  const Grid({Key? key}) : super(key: key);
+  final ComponentApiConfig apiConfig;
+  const Grid({Key? key, required this.apiConfig}) : super(key: key);
 
   factory Grid.fromConfig(GridConfig config) {
-    return const Grid();
+    return Grid(apiConfig: config.apiConfig);
   }
   @override
   Widget build(BuildContext context) {

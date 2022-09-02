@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:juno_flutter/router/navigation.dart';
+import 'package:juno_flutter/components/config/carousel_config.dart';
 
 class Carousel extends StatefulWidget {
-  final List<Widget> slides;
+  List<Widget>? slides;
+  final List<dynamic> slideConfigs;
 
-  const Carousel(this.slides, {Key? key}) : super(key: key);
+  Carousel(this.slideConfigs, {Key? key}) : super(key: key);
 
   factory Carousel.fromConfig(CarouselConfig config) {
-    return Carousel(config.slides);
+    return Carousel(config.slideConfigs);
   }
 
   @override
@@ -28,10 +29,4 @@ class _CarouselState extends State<Carousel> {
       ),
     );
   }
-}
-
-class CarouselConfig extends ComponentConfig {
-  final List<Widget> slides;
-
-  CarouselConfig(super.rawConfig, this.slides);
 }

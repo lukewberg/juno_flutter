@@ -52,7 +52,3 @@ class _ActionButtonState extends State<ActionButton> {
     );
   }
 }
-
-class ActionButtonConfig extends ComponentConfig{
-  ActionButtonConfig(super.rawConfig);
-}

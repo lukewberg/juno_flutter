@@ -6,9 +6,7 @@ part 'grid_config.g.dart';
 
 @JsonSerializable()
 class GridConfig extends ComponentConfig {
-  final ComponentApiConfig apiConfig;
-
-  GridConfig(super.rawConfig, this.apiConfig);
+  GridConfig(rawConfig, apiConfig) : super(rawConfig: rawConfig, apiConfig: apiConfig);
 
   factory GridConfig.fromJsonLegacy(Map<String, dynamic> json) =>
       _$GridConfigFromJson(json);
