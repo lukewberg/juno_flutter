@@ -5,9 +5,9 @@ import 'package:juno_flutter/utils/api_route.dart';
 import 'app_page.dart';
 
 class Navigation {
-  final List<NavItem> routes;
+  final List<NavItem>? routes;
 
-  Navigation(this.routes);
+  Navigation({this.routes});
 }
 
 class NavItem {

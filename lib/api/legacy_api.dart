@@ -4,6 +4,7 @@ import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:juno_flutter/api/models/user.dart';
 import 'package:juno_flutter/components/component_index.dart';
+import 'package:juno_flutter/providers/app_provider.dart';
 import 'package:juno_flutter/router/app_page.dart';
 import 'package:juno_flutter/router/app_page_extension.dart';
 import 'package:juno_flutter/router/navigation.dart';
@@ -42,7 +43,8 @@ class LegacyAPI with Network implements API {
 
     var smcPayload = jsonDecode(result.body);
     var config = jsonDecode(smcPayload['config']['config_config']);
-    parseNav(config['NAVIGATION']);
+    AppProvider().navigation = parseNav(config['NAVIGATION']);
+    // parseNav(config['NAVIGATION']);
   }
 
   @override
@@ -110,7 +112,7 @@ class LegacyAPI with Network implements API {
           break;
       }
     }
-    return Navigation(navItems);
+    return Navigation(routes: navItems);
   }
 
   @override

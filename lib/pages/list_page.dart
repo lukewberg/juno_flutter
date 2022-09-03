@@ -11,7 +11,8 @@ class ListPage extends StatelessWidget {
   factory ListPage.fromNav(BuildContext context, NavItem navItem) {
     List<Widget> components = [];
     for (var component in navItem.components) {
-      components.add(component.type.component(context, component.type.legacyConfig(component.rawConfig)));
+      components.add(component.type.component(
+          context, component.type.legacyConfig(component.rawConfig)));
     }
     return ListPage(components: components);
   }
