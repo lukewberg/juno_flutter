@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:juno_flutter/components/component_index.dart';
-import 'package:juno_flutter/router/navigation.dart';
 import 'package:juno_flutter/utils/api_route.dart';
 
 import 'app_page.dart';
@@ -18,15 +17,7 @@ class NavItem {
   final List<NavItem>? subRoutes;
   final List<ComponentSeed> components;
 
-  NavItem(
-    this.name,
-    this.route,
-    this.type,
-    this.components,
-  {
-    this.subRoutes
-  }
-  );
+  NavItem(this.name, this.route, this.type, this.components, {this.subRoutes});
 }
 
 class ComponentSeed {
@@ -43,27 +34,30 @@ class ComponentConfig<T> {
   ComponentConfig({required this.rawConfig, this.apiConfig});
 }
 
+@JsonSerializable()
+@ComponentApiConfigConverter()
 class ComponentApiConfig {
-  final String endpoint;
   final API_ROUTE apiVersion;
+  final String? endpoint;
   final Map<String, dynamic>? tags;
-  final Map<String, dynamic>? buckets;
   final Map<String, dynamic>? contentType;
-  final int? id;
+  final int? slug;
 
-  ComponentApiConfig(this.endpoint, this.apiVersion,
-      {this.tags, this.buckets, this.contentType, this.id});
+  ComponentApiConfig(this.apiVersion,
+      {this.endpoint, this.tags, this.contentType, this.slug});
 }
 
-class ComponentApiConfigConverter extends JsonConverter<ComponentApiConfig, Map<String, dynamic>> {
+class ComponentApiConfigConverter
+    extends JsonConverter<ComponentApiConfig, Map<String, dynamic>> {
+  const ComponentApiConfigConverter();
+
   @override
   ComponentApiConfig fromJson(Map<String, dynamic> json) {
     return ComponentApiConfig(
-      json['endpoint'],
-      API_ROUTE.values.firstWhere((e) => e.toString() == json['apiVersion']),
-      tags: json['tags'],
-      contentType: json['contentType'],
-      id: json['id'],
+      API_ROUTE.v2,
+      tags: json['required_tags'],
+      contentType: json['buckets'],
+      slug: json['slug'],
     );
   }
 
@@ -72,5 +66,4 @@ class ComponentApiConfigConverter extends JsonConverter<ComponentApiConfig, Map<
     // TODO: implement toJson
     throw UnimplementedError();
   }
-
 }

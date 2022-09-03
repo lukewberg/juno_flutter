@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:juno_flutter/api/legacy_api.dart';
 import 'package:juno_flutter/components/action_button.dart';
-import 'package:juno_flutter/components/juno_appbar.dart';
 import 'package:juno_flutter/components/text_input.dart';
 
 class LoginPage extends StatefulWidget {
