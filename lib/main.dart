@@ -19,12 +19,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late AppProvider appProvider;
+  late AppService appService;
   late AuthProvider authProvider;
 
   @override
   void initState() {
-    appProvider = AppProvider();
+    appService = AppService();
     authProvider = AuthProvider();
   }
 
@@ -34,8 +34,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         Provider(create: (_) => authProvider),
-        Provider(create: (_) => appProvider),
-        Provider(create: (_) => AppRouter(appProvider, authProvider))
+        Provider(create: (_) => appService),
+        Provider(create: (_) => AppRouter(appService, authProvider))
       ],
       child: Builder(
         builder: (context) {

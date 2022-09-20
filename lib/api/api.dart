@@ -1,6 +1,6 @@
 abstract class API {
 
-  void getSite(Uri magicLink);
+  void authenticate(Uri magicLink);
 
   void getRoutes();
 

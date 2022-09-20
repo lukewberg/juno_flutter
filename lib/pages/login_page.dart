@@ -2,9 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:juno_flutter/api/legacy_api.dart';
 import 'package:juno_flutter/components/action_button.dart';
 import 'package:juno_flutter/components/text_input.dart';
+import 'package:juno_flutter/providers/auth_provider.dart';
+import 'package:juno_flutter/router/app_page.dart';
+import 'package:juno_flutter/router/app_page_extension.dart';
+import 'package:juno_flutter/router/app_router.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -71,7 +77,15 @@ class _LoginPageState extends State<LoginPage> {
                     height: 25,
                   ),
                   ActionButton('Log in', () {
-                    LegacyAPI().getSite(Uri.parse(magicLinkController.text));
+                    if (magicLinkController.text.isNotEmpty) {
+                      context.read<AuthProvider>().login(
+                          magicLinkController.text,
+                          (bool success) {
+                        if (success) {
+                          context.goNamed(APP_PAGE.home.name);
+                        }
+                      });
+                    }
                   }),
                 ],
               ),

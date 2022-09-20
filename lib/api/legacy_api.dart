@@ -23,7 +23,7 @@ class LegacyAPI with Network implements API {
   LegacyAPI._internal();
 
   @override
-  Future<void> getSite(Uri magicLink) async {
+  Future<Navigation> authenticate(Uri magicLink) async {
     var host = magicLink.pathSegments[1];
     var token = magicLink.pathSegments[2];
 
@@ -43,7 +43,7 @@ class LegacyAPI with Network implements API {
 
     var smcPayload = jsonDecode(result.body);
     var config = jsonDecode(smcPayload['config']['config_config']);
-    AppProvider().navigation = parseNav(config['NAVIGATION']);
+    return parseNav(config['NAVIGATION']);
     // parseNav(config['NAVIGATION']);
   }
 
