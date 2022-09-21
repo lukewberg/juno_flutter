@@ -4,12 +4,12 @@ import 'package:juno_flutter/components/config/carousel_config.dart';
 
 class Carousel extends StatefulWidget {
   List<Widget>? slides;
-  final List<dynamic> slideConfigs;
+  // final Map<String, dynamic> slideConfig;
 
-  Carousel(this.slideConfigs, {Key? key}) : super(key: key);
+  Carousel({Key? key}) : super(key: key);
 
   factory Carousel.fromConfig(CarouselConfig config) {
-    return Carousel(config.slideConfigs);
+    return Carousel();
   }
 
   @override
