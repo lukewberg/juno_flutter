@@ -78,13 +78,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ActionButton('Log in', () {
                     if (magicLinkController.text.isNotEmpty) {
-                      context.read<AuthProvider>().login(
-                          magicLinkController.text,
-                          (bool success) {
+                      return Provider.of<AuthProvider>(context, listen: false)
+                          .login(magicLinkController.text)
+                          .then((success) {
                         if (success) {
                           context.goNamed(APP_PAGE.home.name);
                         }
                       });
+                    } else {
+                      return Future.value();
                     }
                   }),
                 ],

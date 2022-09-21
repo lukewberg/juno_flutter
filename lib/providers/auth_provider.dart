@@ -12,19 +12,10 @@ class AuthProvider with ChangeNotifier {
     _isAuthed = value;
   }
 
-  Future<bool> login(String magicLink, LoginCallback? callback) async {
-    var result =
-        await LegacyAPI().authenticate(Uri.parse(magicLink)).then((value) {
-      _isAuthed = true;
-      notifyListeners();
-      if (callback != null) {
-        callback(true);
-      }
-    });
-    if (result) {
-      return true;
-    } else {
-      return false;
-    }
+  Future<bool> login(String magicLink) async {
+    var result = await LegacyAPI().authenticate(Uri.parse(magicLink));
+    notifyListeners();
+    _isAuthed = true;
+    return true;
   }
 }

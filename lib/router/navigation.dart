@@ -7,6 +7,10 @@ import 'app_page.dart';
 class Navigation {
   final List<NavItem>? routes;
 
+  NavItem getNavItem(String route) {
+    return routes!.firstWhere((element) => element.route == route);
+  }
+
   Navigation({this.routes});
 }
 

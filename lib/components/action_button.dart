@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/router/navigation.dart';
 
-typedef OnTap = void Function();
+typedef OnTap = Future<void> Function();
 
 class ActionButton extends StatefulWidget {
   final String text;
@@ -17,10 +17,18 @@ class ActionButton extends StatefulWidget {
 }
 
 class _ActionButtonState extends State<ActionButton> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: () {
+        if (!_isLoading) {
+          showLoading(true);
+          widget.onTap().then((value) {
+            showLoading(false);
+          });
+        }
+      },
       child: SizedBox(
         width: widget.width ?? double.infinity,
         child: DecoratedBox(
@@ -38,17 +46,46 @@ class _ActionButtonState extends State<ActionButton> {
               horizontal: 25,
               vertical: 10,
             ),
-            child: Text(
-              widget.text,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.text,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                if (_isLoading)
+                  const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                else
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void showLoading(bool isLoading) {
+    setState(() {
+      _isLoading = isLoading;
+    });
   }
 }

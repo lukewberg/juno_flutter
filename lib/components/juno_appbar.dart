@@ -37,7 +37,7 @@ class _JunoAppbarState extends State<JunoAppbar> {
                   children: [
                     SvgPicture.asset(
                       'assets/img/juno_logo.svg',
-                      height: 40,
+                      height: 30,
                       color: Colors.white,
                     ),
                     const Spacer(
