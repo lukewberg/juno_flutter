@@ -15,8 +15,9 @@ class AppService with ChangeNotifier {
   static List<Widget> appPageBuilder(BuildContext context, NavItem navItem) {
     List<Widget> components = [];
     for (var component in navItem.components) {
-      components.add(component.type.component(
-          context, component.type.legacyConfig(component.rawConfig)));
+      var config = component.type.legacyConfig(component.rawConfig);
+      var widget = component.type.component(context, config);
+      components.add(widget);
     }
     return components;
   }

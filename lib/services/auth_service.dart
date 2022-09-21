@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/api/legacy_api.dart';
+import 'package:juno_flutter/router/navigation.dart';
 
 typedef LoginCallback = void Function(bool success);
 
-class AuthProvider with ChangeNotifier {
+class AuthService with ChangeNotifier {
   bool _isAuthed = false;
 
   bool get isAuthed => _isAuthed;
@@ -12,10 +13,10 @@ class AuthProvider with ChangeNotifier {
     _isAuthed = value;
   }
 
-  Future<bool> login(String magicLink) async {
+  Future<Navigation> login(String magicLink) async {
     var result = await LegacyAPI().authenticate(Uri.parse(magicLink));
     notifyListeners();
     _isAuthed = true;
-    return true;
+    return result;
   }
 }

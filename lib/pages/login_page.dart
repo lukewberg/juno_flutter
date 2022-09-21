@@ -1,15 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juno_flutter/api/legacy_api.dart';
 import 'package:juno_flutter/components/action_button.dart';
 import 'package:juno_flutter/components/text_input.dart';
-import 'package:juno_flutter/providers/auth_provider.dart';
+import 'package:juno_flutter/router/app_router.dart';
+import 'package:juno_flutter/services/app_service.dart';
+import 'package:juno_flutter/services/auth_service.dart';
 import 'package:juno_flutter/router/app_page.dart';
 import 'package:juno_flutter/router/app_page_extension.dart';
-import 'package:juno_flutter/router/app_router.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -78,12 +76,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ActionButton('Log in', () {
                     if (magicLinkController.text.isNotEmpty) {
-                      return Provider.of<AuthProvider>(context, listen: false)
+                      return Provider.of<AuthService>(context, listen: false)
                           .login(magicLinkController.text)
-                          .then((success) {
-                        if (success) {
-                          context.goNamed(APP_PAGE.home.name);
-                        }
+                          .then((navigation) {
+                        Provider.of<AppRouter>(context, listen: false).nav =
+                            navigation;
+                        context.goNamed(APP_PAGE.home.name);
                       });
                     } else {
                       return Future.value();

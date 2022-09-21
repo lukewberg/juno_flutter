@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:juno_flutter/router/navigation.dart';
 
 typedef OnTap = Future<void> Function();
 

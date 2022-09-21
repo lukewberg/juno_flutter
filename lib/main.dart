@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juno_flutter/components/juno_appbar.dart';
-import 'package:juno_flutter/pages/login_page.dart';
-import 'package:juno_flutter/providers/app_provider.dart';
-import 'package:juno_flutter/providers/auth_provider.dart';
+import 'package:juno_flutter/services/app_service.dart';
+import 'package:juno_flutter/services/auth_service.dart';
 import 'package:juno_flutter/router/app_router.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +19,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late AppService appService;
-  late AuthProvider authProvider;
+  late AuthService authService;
 
   @override
   void initState() {
     appService = AppService();
-    authProvider = AuthProvider();
+    authService = AuthService();
   }
 
   // This widget is the root of your application.
@@ -33,9 +32,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthProvider>(create: (_) => authProvider),
+        ChangeNotifierProvider<AuthService>(create: (_) => authService),
         Provider(create: (_) => appService),
-        Provider(create: (_) => AppRouter(appService, authProvider))
+        Provider(create: (_) => AppRouter(appService, authService))
       ],
       child: Builder(
         builder: (context) {

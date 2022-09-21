@@ -4,7 +4,6 @@ import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:juno_flutter/api/models/user.dart';
 import 'package:juno_flutter/components/component_index.dart';
-import 'package:juno_flutter/providers/app_provider.dart';
 import 'package:juno_flutter/router/app_page.dart';
 import 'package:juno_flutter/router/app_page_extension.dart';
 import 'package:juno_flutter/router/navigation.dart';
