@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/api/models/user.dart';
 import 'package:juno_flutter/components/component_index.dart';
 import 'package:juno_flutter/router/app_page.dart';
@@ -62,8 +63,28 @@ class LegacyAPI with Network implements API {
   }
 
   @override
-  void queryContent() {
-    // TODO: implement queryContent
+  Future<List<Content>> queryContent(
+      REQUEST_TYPE type,
+      BUCKETS? bucket,
+      API_ROUTE apiVersion,
+      Map<String, dynamic> tags,
+      String slug,
+      int limit) async {
+    var endpoint = '${apiVersion.path}/api_content_oneAndOnlyList.php';
+    var body = {
+      'buckets': bucket?.name ?? '',
+      'required_tags': jsonEncode(tags),
+      'per_page': limit.toString(),
+      'app': '1'
+    };
+    var content =
+        await fetch(type, endpoint, body) as List<Map<String, dynamic>>;
+
+    var result = content.map((element) {
+      return Content.fromJsonLegacy(element);
+    });
+
+    return result;
   }
 
   @override

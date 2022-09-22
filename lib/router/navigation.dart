@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:juno_flutter/components/component_index.dart';
+import 'package:juno_flutter/router/navigation.dart';
 import 'package:juno_flutter/utils/api_route.dart';
 
 import 'app_page.dart';
@@ -31,11 +32,18 @@ class ComponentSeed {
   ComponentSeed(this.type, this.rawConfig);
 }
 
+@JsonSerializable()
 class ComponentConfig<T> {
+  @JsonKey(readValue: readSelf)
   final Map<String, dynamic> rawConfig;
   final ComponentApiConfig? apiConfig;
 
   ComponentConfig({required this.rawConfig, this.apiConfig});
+
+  // This is used to get the root-level config json
+  static Object? readSelf(Map<dynamic, dynamic> json, String key) {
+    return json;
+  }
 }
 
 @JsonSerializable()

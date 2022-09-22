@@ -1,3 +1,7 @@
+import 'package:juno_flutter/api/models/content.dart';
+import 'package:juno_flutter/utils/api_route.dart';
+import 'package:juno_flutter/utils/request_type.dart';
+
 abstract class API {
 
   void authenticate(Uri magicLink);
@@ -8,7 +12,8 @@ abstract class API {
 
   void getSession();
 
-  void queryContent();
+  void queryContent(REQUEST_TYPE type,  BUCKETS bucket, API_ROUTE apiVersion,
+      Map<String, dynamic> tags, String slug, int limit);
 
   void tokenLogin(Uri magicLink);
 
