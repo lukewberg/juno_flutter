@@ -17,24 +17,24 @@ class Content {
   @JsonKey(name: 'content_slug')
   final String slug;
   @JsonKey(name: 'content_date')
-  final DateTime date;
+  final DateTime? date;
   @JsonKey(name: 'content_date_start')
   final DateTime? startDate;
   @JsonKey(name: 'content_date_end')
   final DateTime? endDate;
-  // @JsonKey(name: 'content_datecreated')
-  // final DateTime created;
+  @JsonKey(name: 'content_datecreated')
+  final DateTime? created;
   @JsonKey(name: 'content_dateupdated')
-  final DateTime lastUpdated;
+  final DateTime? lastUpdated;
   @JsonKey(name: 'content_image')
   final String? image;
   @JsonKey(name: ' content_image')
   final String? thumbnail;
   @JsonKey(name: 'content_img_srcset')
-  final List<Uri> sourceSet;
-  @JsonKey(name: 'content_active')
+  final List<Uri>? sourceSet;
+  @JsonKey(name: 'content_active', readValue: _stringToBool)
   final bool isActive;
-  @JsonKey(name: 'content_featured')
+  @JsonKey(name: 'content_featured', readValue: _stringToBool)
   final bool isFeatured;
 
   Content(
@@ -47,7 +47,7 @@ class Content {
       this.date,
       this.startDate,
       this.endDate,
-      // this.created,
+      this.created,
       this.lastUpdated,
       this.image,
       this.thumbnail,
@@ -61,6 +61,10 @@ factory Content.fromJsonLegacy(Map<String, dynamic> json) => _$ContentFromJson(j
       _$ContentFromJson(json);
 
   Map<String, dynamic> toJson() => _$ContentToJson(this);
+
+  static Object? _stringToBool(Map<dynamic, dynamic> json, String key) {
+    return json[key] == 'true';
+  }
 }
 
 enum BUCKETS {
