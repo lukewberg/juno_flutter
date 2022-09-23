@@ -15,6 +15,7 @@ import 'package:juno_flutter/utils/request_type.dart';
 
 class LegacyAPI with Network implements API {
   static final LegacyAPI _legacyAPI = LegacyAPI._internal();
+  late String _siteUrl;
 
   factory LegacyAPI() {
     return _legacyAPI;
@@ -70,21 +71,17 @@ class LegacyAPI with Network implements API {
       Map<String, dynamic> tags,
       String slug,
       int limit) async {
-    var endpoint = '${apiVersion.path}/api_content_oneAndOnlyList.php';
+    var endpoint = Uri.parse(
+        '$_siteUrl/${apiVersion.path}/api_content_oneAndOnlyList.php');
     var body = {
       'buckets': bucket?.name ?? '',
       'required_tags': jsonEncode(tags),
       'per_page': limit.toString(),
       'app': '1'
     };
-    var content =
-        await fetch(type, endpoint, body) as List<Map<String, dynamic>>;
-
-    var result = content.map((element) {
-      return Content.fromJsonLegacy(element);
-    });
-
-    return result;
+    var content = await fetch(type, endpoint, body);
+    var contentList = jsonDecode(content.body)['content'] as List;
+    return contentList.map((e) => Content.fromJsonLegacy(e)).toList();
   }
 
   @override
@@ -141,6 +138,8 @@ class LegacyAPI with Network implements API {
     var token = magicLink.pathSegments[2];
     var reroute = magicLink.queryParameters['token_reroute'];
 
+    _siteUrl = 'https://$host';
+
     var body = {
       'token': token,
       'magic_link_reroute': reroute ?? '/main',
@@ -150,8 +149,7 @@ class LegacyAPI with Network implements API {
 
     var result = fetch(
       REQUEST_TYPE.post,
-      Uri.parse(
-          'https://$host/${API_ROUTE.v2.path}/api_user_login_by_token.php'),
+      Uri.parse('$_siteUrl/${API_ROUTE.v2.path}/api_user_login_by_token.php'),
       body,
     );
     return result;

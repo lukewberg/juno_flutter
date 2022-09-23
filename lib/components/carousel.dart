@@ -31,8 +31,8 @@ class Carousel extends StatefulWidget {
 
   Future<List<Widget>> getSlides() async {
     var slideContent = await LegacyAPI().queryContent(
-        REQUEST_TYPE.get, BUCKETS.Session, API_ROUTE.v2, {}, '', 10);
-    return slideContent.map((e) => Text(e.title)).toList();
+        REQUEST_TYPE.post, BUCKETS.OTSession, API_ROUTE.v2, {}, '', 10);
+    return slideContent.map((e) => Text(e.name)).toList();
   }
 
   @override
@@ -43,29 +43,30 @@ class _CarouselState extends State<Carousel> {
   @override
   void initState() {
     super.initState();
+    widget.getSlides().then((value) => setState(() {
+          widget.slides = value;
+        }));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(widget.title),
-          CarouselSlider(
-            items: widget.slides ?? [],
-            options: CarouselOptions(
-              height: 400.0,
-              autoPlay: true,
-              enlargeCenterPage: true,
-              aspectRatio: 16 / 9,
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enableInfiniteScroll: true,
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              viewportFraction: 0.8,
-            ),
+    return Column(
+      children: [
+        Text(widget.title),
+        CarouselSlider(
+          items: widget.slides ?? [],
+          options: CarouselOptions(
+            height: 400.0,
+            autoPlay: true,
+            enlargeCenterPage: true,
+            aspectRatio: 16 / 9,
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enableInfiniteScroll: true,
+            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+            viewportFraction: 0.8,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
