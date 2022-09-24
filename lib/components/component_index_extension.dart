@@ -6,7 +6,8 @@ import 'package:juno_flutter/components/config/action_button_config.dart';
 import 'package:juno_flutter/components/config/carousel_config.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
 import 'package:juno_flutter/components/grid.dart';
-import 'package:juno_flutter/router/navigation.dart';
+
+import 'config/component_config.dart';
 
 typedef ConfigBuilder = ComponentConfig Function(Map<String, dynamic> config);
 typedef ComponentBuilder = Widget Function(BuildContext context, dynamic config);

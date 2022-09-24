@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:juno_flutter/router/navigation.dart';
+import 'component_config.dart';
 
 part 'carousel_config.g.dart';
 

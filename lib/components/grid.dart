@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
-import 'package:juno_flutter/router/navigation.dart';
+
+import 'config/component_api_config.dart';
 
 class Grid extends StatelessWidget {
   final ComponentApiConfig? apiConfig;

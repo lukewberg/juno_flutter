@@ -33,7 +33,6 @@ class Carousel extends StatefulWidget {
   Future<List<Widget>> getSlides() async {
     var slideContent = await LegacyAPI().queryContent(
         REQUEST_TYPE.post, BUCKETS.OTSession, API_ROUTE.v2, {}, '', 10);
-    print(slideContent);
     return slideContent
         .map((e) => SquareSlide(
               content: e,
