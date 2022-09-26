@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:juno_flutter/utils/api_route.dart';
 
@@ -8,17 +6,36 @@ part 'component_api_config.g.dart';
 @JsonSerializable()
 @ComponentApiConfigConverter()
 class ComponentApiConfig {
+  @JsonKey(defaultValue: API_ROUTE.v2)
   final API_ROUTE apiVersion;
   final String? endpoint;
-  final Map<String, dynamic>? tags;
-  final Map<String, dynamic>? contentType;
-  final int? slug;
+  final List<int>? requiredTags;
+  @JsonKey(name: 'not_tag_id')
+  final List<int>? excludedTags;
+  @JsonKey(name: 'buckets', readValue: _readBuckets)
+  final List<String> contentType;
+  final String? slug;
 
   ComponentApiConfig(this.apiVersion,
-      {this.endpoint, this.tags, this.contentType, this.slug});
+      {this.endpoint,
+      this.requiredTags,
+      this.excludedTags,
+      required this.contentType,
+      this.slug});
 
   factory ComponentApiConfig.fromJson(Map<String, dynamic> json) =>
       _$ComponentApiConfigFromJson(json);
+
+  static Object? _readBuckets(Map<dynamic, dynamic> json, String key) {
+    if (json.containsKey(key) && json[key] is List) {
+      final List<dynamic> buckets = json[key];
+      return buckets.map((e) => e.toString()).toList();
+    } else if (json.containsKey(key) && json[key] is String) {
+      return [json[key]];
+    } else {
+      return [];
+    }
+  }
 }
 
 class ComponentApiConfigConverter
@@ -29,7 +46,8 @@ class ComponentApiConfigConverter
   ComponentApiConfig fromJson(Map<String, dynamic> json) {
     return ComponentApiConfig(
       API_ROUTE.v2,
-      tags: json['required_tags'],
+      requiredTags: json['required_tags'],
+      excludedTags: json['not_tag_id'],
       contentType: json['buckets'],
       slug: json['slug'],
     );

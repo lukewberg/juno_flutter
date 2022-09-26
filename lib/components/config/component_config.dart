@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'component_api_config.dart';
 
+@JsonSerializable()
 class ComponentConfig {
   @JsonKey(readValue: readSelf)
   final Map<String, dynamic> rawConfig;

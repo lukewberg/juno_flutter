@@ -78,9 +78,11 @@ class _LoginPageState extends State<LoginPage> {
                     if (magicLinkController.text.isNotEmpty) {
                       return Provider.of<AuthService>(context, listen: false)
                           .login(magicLinkController.text)
-                          .then((navigation) {
+                          .then((authResult) {
+                        Provider.of<AppService>(context, listen: false)
+                            .appConfig = authResult.config;
                         Provider.of<AppRouter>(context, listen: false).nav =
-                            navigation;
+                            authResult.navigation;
                         context.goNamed(APP_PAGE.home.name);
                       });
                     } else {

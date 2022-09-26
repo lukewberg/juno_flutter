@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juno_flutter/api/api.dart';
 import 'package:juno_flutter/api/legacy_api.dart';
 import 'package:juno_flutter/router/navigation.dart';
 
@@ -13,7 +14,7 @@ class AuthService with ChangeNotifier {
     _isAuthed = value;
   }
 
-  Future<Navigation> login(String magicLink) async {
+  Future<AuthResult> login(String magicLink) async {
     var result = await LegacyAPI().authenticate(Uri.parse(magicLink));
     notifyListeners();
     _isAuthed = true;

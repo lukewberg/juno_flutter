@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:juno_flutter/components/config/component_api_config.dart';
 import 'component_config.dart';
 
 part 'carousel_config.g.dart';
@@ -11,8 +12,9 @@ class CarouselConfig extends ComponentConfig {
   final bool? hasArrows;
   final bool? hasDots;
 
-  CarouselConfig(rawConfig, this.title, this.hasArrows, this.hasDots)
-      : super(rawConfig: rawConfig);
+  CarouselConfig(rawConfig, ComponentApiConfig apiConfig, this.title,
+      this.hasArrows, this.hasDots)
+      : super(rawConfig: rawConfig, apiConfig: apiConfig);
 
   factory CarouselConfig.fromJsonLegacy(Map<String, dynamic> json) =>
       _$CarouselConfigFromJson(json);

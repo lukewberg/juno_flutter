@@ -16,6 +16,10 @@ class SquareSlide extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            Image.network(
+              content.image ?? '',
+              fit: BoxFit.cover,
+            ),
             Text(content.name),
           ],
         ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:juno_flutter/api/models/app_config.dart';
 import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/api/models/user.dart';
 import 'package:juno_flutter/components/component_index.dart';
@@ -24,7 +25,7 @@ class LegacyAPI with Network implements API {
   LegacyAPI._internal();
 
   @override
-  Future<Navigation> authenticate(Uri magicLink) async {
+  Future<AuthResult> authenticate(Uri magicLink) async {
     var host = magicLink.pathSegments[1];
     var token = magicLink.pathSegments[2];
 
@@ -43,9 +44,14 @@ class LegacyAPI with Network implements API {
         });
 
     var smcPayload = jsonDecode(result.body);
+    var baseConfig =
+        jsonDecode(smcPayload['config']['base_config'][0]['config_config']);
     var config = jsonDecode(smcPayload['config']['config_config']);
-    return parseNav(config['NAVIGATION']);
-    // parseNav(config['NAVIGATION']);
+
+    var appConfig = parseConfig(baseConfig);
+    var navigation = parseNav(config['NAVIGATION']);
+    var authResult = AuthResult(appConfig, navigation);
+    return authResult;
   }
 
   @override
@@ -89,7 +95,10 @@ class LegacyAPI with Network implements API {
     //  TODO: implement getNavigation
   }
 
-  void parseConfig(Map<String, dynamic> config) {}
+  @override
+  AppConfig parseConfig(Map<String, dynamic> config) {
+    return AppConfig.fromJsonLegacy(config);
+  }
 
   Navigation parseNav(List<dynamic> rawNav) {
     List<NavItem> navItems = [];

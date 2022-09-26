@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (_) => authService),
-        Provider(create: (_) => appService),
+        ChangeNotifierProvider<AppService>(create: (_) => appService),
         Provider(create: (_) => AppRouter(appService, authService))
       ],
       child: Builder(
