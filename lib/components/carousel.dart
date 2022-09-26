@@ -62,13 +62,29 @@ class _CarouselState extends State<Carousel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(widget.title),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget.title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
         CarouselSlider(
           items: widget.slides ?? [],
           options: CarouselOptions(
-            height: 200.0,
             autoPlay: true,
             enlargeCenterPage: true,
+            pageSnapping: false,
+            pauseAutoPlayOnTouch: true,
             aspectRatio: 16 / 9,
             autoPlayCurve: Curves.fastOutSlowIn,
             enableInfiniteScroll: true,
