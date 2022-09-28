@@ -16,8 +16,8 @@ abstract class API {
 
   AppConfig parseConfig(Map<String, dynamic> config);
 
-  void queryContent(REQUEST_TYPE type,  BUCKETS bucket, API_ROUTE apiVersion,
-      Map<String, dynamic> tags, String slug, int limit);
+  void queryContent(REQUEST_TYPE type,  List<BUCKETS>? buckets, API_ROUTE apiVersion,
+      List<int>? tags, String? slug, int? limit);
 
   void tokenLogin(Uri magicLink);
 

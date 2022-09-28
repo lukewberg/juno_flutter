@@ -9,6 +9,10 @@ class SquareSlide extends StatelessWidget {
 
   const SquareSlide({Key? key, required this.content}) : super(key: key);
 
+  factory SquareSlide.fromContent(Content content) {
+    return SquareSlide(content: content);
+  }
+
   @override
   Widget build(BuildContext context) {
     var s3Config = Provider.of<AppService>(context).appConfig.s3BucketUrl;
@@ -28,13 +32,28 @@ class SquareSlide extends StatelessWidget {
               children: [
                 content.image != null && content.image != ""
                     ? SizedBox.expand(
-                      child: Image.network(
+                        child: Image.network(
                           // width: double.infinity,
                           // height: double.infinity,
                           s3Config + content.image!,
                           fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white),
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.block_outlined,
+                                color: Colors.white, size: 75);
+                          },
                         ),
-                    )
+                      )
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: SvgPicture.asset(

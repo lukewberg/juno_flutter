@@ -9,7 +9,7 @@ import 'package:juno_flutter/utils/api_route.dart';
 import 'package:juno_flutter/utils/request_type.dart';
 
 class Carousel extends StatefulWidget {
-  List<Widget>? slides;
+  List<Widget> slides = [];
   final String title;
   final bool hasArrows;
   final bool hasDots;
@@ -36,13 +36,18 @@ class Carousel extends StatefulWidget {
 
   Future<List<Widget>> getSlides() async {
     // TODO: update to use apiConfig
-    var slideContent = await LegacyAPI().queryContent(
-        REQUEST_TYPE.post, BUCKETS.OTSession, API_ROUTE.v2, {}, '', 10);
-    return slideContent
-        .map((e) => SquareSlide(
-              content: e,
-            ))
-        .toList();
+    if (apiConfig != null) {
+      List<Content> content = await LegacyAPI().queryContent(
+          REQUEST_TYPE.post,
+          apiConfig!.contentType.map((e) => BUCKETS.values.byName(e)).toList(),
+          API_ROUTE.v2,
+          apiConfig!.requiredTags,
+          apiConfig!.slug,
+          5);
+      return content.map((e) => SquareSlide.fromContent(e)).toList();
+    } else {
+      return [];
+    }
   }
 
   @override
@@ -65,21 +70,32 @@ class _CarouselState extends State<Carousel> {
         const SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              widget.title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  widget.title,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 10),
         CarouselSlider(
-          items: widget.slides ?? [],
+          items: widget.slides.map((e) {
+            return Builder(
+              builder: (BuildContext context) {
+                return e;
+              },
+            );
+          }).toList(),
           options: CarouselOptions(
             autoPlay: true,
             enlargeCenterPage: true,

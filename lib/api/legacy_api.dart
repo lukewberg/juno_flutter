@@ -72,16 +72,16 @@ class LegacyAPI with Network implements API {
   @override
   Future<List<Content>> queryContent(
       REQUEST_TYPE type,
-      BUCKETS? bucket,
+      List<BUCKETS>? buckets,
       API_ROUTE apiVersion,
-      Map<String, dynamic> tags,
-      String slug,
-      int limit) async {
+      List<int>? requiredTags,
+      String? slug,
+      int? limit) async {
     var endpoint = Uri.parse(
         '$_siteUrl/${apiVersion.path}/api_content_oneAndOnlyList.php');
     var body = {
-      'buckets': bucket?.name ?? '',
-      'required_tags': jsonEncode(tags),
+      'buckets': jsonEncode(buckets?.map((e) => e.name).toList()),
+      'required_tags': jsonEncode(requiredTags),
       'per_page': limit.toString(),
       'app': '1'
     };
