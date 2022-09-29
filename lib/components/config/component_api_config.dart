@@ -15,13 +15,16 @@ class ComponentApiConfig {
   @JsonKey(name: 'buckets', readValue: _readBuckets)
   final List<String> contentType;
   final String? slug;
+  @JsonKey(name: 'per_page')
+  final int? limit;
 
   ComponentApiConfig(this.apiVersion,
       {this.endpoint,
       this.requiredTags,
       this.excludedTags,
       required this.contentType,
-      this.slug});
+      this.slug,
+      this.limit});
 
   factory ComponentApiConfig.fromJson(Map<String, dynamic> json) =>
       _$ComponentApiConfigFromJson(json);
@@ -50,6 +53,7 @@ class ComponentApiConfigConverter
       excludedTags: json['not_tag_id'],
       contentType: json['buckets'],
       slug: json['slug'],
+      limit: json['per_page'],
     );
   }
 

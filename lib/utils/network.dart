@@ -3,8 +3,8 @@ import 'package:juno_flutter/utils/request_type.dart';
 
 //  Use as a mixin
 class Network {
-
-  Future<http.Response> fetch(REQUEST_TYPE type, endpoint, Map<String, String> body) {
+  Future<http.Response> fetch(
+      REQUEST_TYPE type, endpoint, Map<String, dynamic> body) {
     switch (type) {
       case REQUEST_TYPE.post:
         return http.post(endpoint, body: body);

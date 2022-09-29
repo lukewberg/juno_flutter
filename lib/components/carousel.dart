@@ -38,12 +38,13 @@ class Carousel extends StatefulWidget {
     // TODO: update to use apiConfig
     if (apiConfig != null) {
       List<Content> content = await LegacyAPI().queryContent(
-          REQUEST_TYPE.post,
-          apiConfig!.contentType.map((e) => BUCKETS.values.byName(e)).toList(),
-          API_ROUTE.v2,
-          apiConfig!.requiredTags,
-          apiConfig!.slug,
-          5);
+        REQUEST_TYPE.post,
+        apiConfig!.contentType.map((e) => BUCKETS.values.byName(e)).toList(),
+        API_ROUTE.v2,
+        apiConfig!.requiredTags,
+        apiConfig!.slug,
+        apiConfig!.limit ?? 5,
+      );
       return content.map((e) => SquareSlide.fromContent(e)).toList();
     } else {
       return [];

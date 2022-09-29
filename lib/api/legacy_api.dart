@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:juno_flutter/api/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:juno_flutter/api/api.dart';
 import 'package:juno_flutter/api/models/app_config.dart';
 import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/api/models/user.dart';
@@ -77,11 +77,13 @@ class LegacyAPI with Network implements API {
       List<int>? requiredTags,
       String? slug,
       int? limit) async {
+    buckets ??= [];
+    requiredTags ??= [];
     var endpoint = Uri.parse(
         '$_siteUrl/${apiVersion.path}/api_content_oneAndOnlyList.php');
     var body = {
-      'buckets': jsonEncode(buckets?.map((e) => e.name).toList()),
-      'required_tags': jsonEncode(requiredTags),
+      for (var i = 0; i < buckets.length; i++) 'buckets[$i]': buckets[i].name,
+      for (var i = 0; i < requiredTags.length; i++) 'tag[$i]': requiredTags[i],
       'per_page': limit.toString(),
       'app': '1'
     };
