@@ -6,10 +6,11 @@ import 'package:juno_flutter/components/config/carousel_config.dart';
 import 'package:juno_flutter/components/config/component_api_config.dart';
 import 'package:juno_flutter/components/slides/square_slide.dart';
 import 'package:juno_flutter/utils/api_route.dart';
+import 'package:juno_flutter/utils/content_builder.dart';
 import 'package:juno_flutter/utils/request_type.dart';
 
 class Carousel extends StatefulWidget {
-  List<Widget> slides = [];
+  List<Widget> slides;
   final String title;
   final bool hasArrows;
   final bool hasDots;
@@ -22,6 +23,7 @@ class Carousel extends StatefulWidget {
       required this.title,
       required this.hasArrows,
       required this.hasDots,
+      required this.slides,
       this.apiConfig})
       : super(key: key);
 
@@ -31,24 +33,13 @@ class Carousel extends StatefulWidget {
       hasArrows: config.hasArrows ?? true,
       hasDots: config.hasDots ?? true,
       apiConfig: config.apiConfig,
+      slides: config.contentList
+          .map((e) => SquareSlide(
+              title: e.name,
+              subtitle: e.description ?? '',
+              image: e.image ?? ''))
+          .toList(),
     );
-  }
-
-  Future<List<Widget>> getSlides() async {
-    // TODO: update to use apiConfig
-    if (apiConfig != null) {
-      List<Content> content = await LegacyAPI().queryContent(
-        REQUEST_TYPE.post,
-        apiConfig!.contentType.map((e) => BUCKETS.values.byName(e)).toList(),
-        API_ROUTE.v2,
-        apiConfig!.requiredTags,
-        apiConfig!.slug,
-        apiConfig!.limit ?? 5,
-      );
-      return content.map((e) => SquareSlide.fromContent(e)).toList();
-    } else {
-      return [];
-    }
   }
 
   @override
@@ -56,14 +47,6 @@ class Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<Carousel> {
-  @override
-  void initState() {
-    super.initState();
-    widget.getSlides().then((value) => setState(() {
-          widget.slides = value;
-        }));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -5,11 +5,10 @@ import 'package:juno_flutter/components/config/grid_config.dart';
 import 'config/component_api_config.dart';
 
 class Grid extends StatelessWidget {
-  final List<Content> content;
-  const Grid({Key? key, required this.apiConfig}) : super(key: key);
+  const Grid({Key? key}) : super(key: key);
 
   factory Grid.fromConfig(GridConfig config) {
-    return Grid(apiConfig: config.apiConfig);
+    return Grid();
   }
   @override
   Widget build(BuildContext context) {

@@ -5,13 +5,13 @@ import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
 
 class SquareSlide extends StatelessWidget {
-  final Content content;
+  final String title;
+  final String subtitle;
+  final String? image;
 
-  const SquareSlide({Key? key, required this.content}) : super(key: key);
-
-  factory SquareSlide.fromContent(Content content) {
-    return SquareSlide(content: content);
-  }
+  const SquareSlide(
+      {Key? key, required this.title, required this.subtitle, this.image})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,12 @@ class SquareSlide extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                content.image != null && content.image != ""
+                image != null && image != ""
                     ? SizedBox.expand(
                         child: Image.network(
                           // width: double.infinity,
                           // height: double.infinity,
-                          s3Config + content.image!,
+                          s3Config + image!,
                           fit: BoxFit.cover,
                           loadingBuilder: (BuildContext context, Widget child,
                               ImageChunkEvent? loadingProgress) {
@@ -43,8 +43,8 @@ class SquareSlide extends StatelessWidget {
                             return const Center(
                               child: CircularProgressIndicator(
                                 color: Colors.white,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white),
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
                             );
                           },
@@ -67,7 +67,7 @@ class SquareSlide extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          content.name,
+          title,
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black54,

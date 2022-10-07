@@ -11,7 +11,7 @@ class ComponentApiConfig {
   final String? endpoint;
   final List<int>? requiredTags;
   @JsonKey(name: 'not_tag_id')
-  final List<int>? excludedTags;
+  final int? excludedTag;
   @JsonKey(name: 'buckets', readValue: _readBuckets)
   final List<String> contentType;
   final String? slug;
@@ -21,7 +21,7 @@ class ComponentApiConfig {
   ComponentApiConfig(this.apiVersion,
       {this.endpoint,
       this.requiredTags,
-      this.excludedTags,
+      this.excludedTag,
       required this.contentType,
       this.slug,
       this.limit});
@@ -50,7 +50,7 @@ class ComponentApiConfigConverter
     return ComponentApiConfig(
       API_ROUTE.v2,
       requiredTags: json['required_tags'],
-      excludedTags: json['not_tag_id'],
+      excludedTag: json['not_tag_id'],
       contentType: json['buckets'],
       slug: json['slug'],
       limit: json['per_page'],
