@@ -35,9 +35,10 @@ class Carousel extends StatefulWidget {
       apiConfig: config.apiConfig,
       slides: config.contentList
           .map((e) => SquareSlide(
-              title: e.name,
-              subtitle: e.description ?? '',
-              image: e.image ?? ''))
+                title: e.name,
+                subtitle: e.description ?? '',
+                image: e.image,
+              ))
           .toList(),
     );
   }

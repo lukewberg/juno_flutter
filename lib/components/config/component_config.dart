@@ -10,11 +10,13 @@ class ComponentConfig<T> {
   @JsonKey(name: 'vars')
   final ComponentApiConfig? apiConfig;
   @JsonKey(ignore: true)
-  Future<List<Content>> contentList = Future.value([]);
+  Future<List<Content>> futureContentList = Future.value([]);
+  @JsonKey(ignore: true)
+  List<Content> contentList = [];
 
   ComponentConfig({required this.rawConfig, this.apiConfig}) {
     if (apiConfig != null) {
-      contentList = ContentBuilder.getContentList(apiConfig!);
+      futureContentList = ContentBuilder.getContentList(apiConfig!);
     }
   }
 
