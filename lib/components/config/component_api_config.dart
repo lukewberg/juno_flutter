@@ -11,7 +11,7 @@ class ComponentApiConfig {
   final String? endpoint;
   final List<int>? requiredTags;
   @JsonKey(name: 'not_tag_id')
-  final int? excludedTag;
+  final List<int>? excludedTag;
   @JsonKey(name: 'buckets', readValue: _readBuckets)
   final List<String> contentType;
   final String? slug;

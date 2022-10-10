@@ -35,7 +35,9 @@ class SquareSlide extends StatelessWidget {
                         child: Image.network(
                           // width: double.infinity,
                           // height: double.infinity,
-                          image!,
+                          Uri.parse(image!).isAbsolute
+                              ? image!
+                              : s3Config + image!,
                           fit: BoxFit.cover,
                           loadingBuilder: (BuildContext context, Widget child,
                               ImageChunkEvent? loadingProgress) {

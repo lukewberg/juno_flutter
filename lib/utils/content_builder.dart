@@ -20,13 +20,14 @@ class ContentBuilder {
     return content;
   }
 
-  static FutureBuilder<List<Content>> getContentListBuilder(
-      ComponentConfig config, Widget Function(List<Content>) builder) {
+  static FutureBuilder<List<Content>> getFutureWidgetBuilder(
+      ComponentConfig config, Widget Function(ComponentConfig) builder) {
     return FutureBuilder<List<Content>>(
       future: config.futureContentList,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return builder(snapshot.data!);
+          config.contentList = snapshot.data ?? [];
+          return builder(config);
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

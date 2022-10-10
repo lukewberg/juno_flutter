@@ -7,6 +7,7 @@ import 'package:juno_flutter/components/config/action_button_config.dart';
 import 'package:juno_flutter/components/config/carousel_config.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
 import 'package:juno_flutter/components/grid.dart';
+import 'package:juno_flutter/utils/content_builder.dart';
 
 import 'config/blurb_config.dart';
 import 'config/component_config.dart';
@@ -34,44 +35,26 @@ extension ComonentIndexExtension on COMPONENT_INDEX {
       case COMPONENT_INDEX.carousel:
         return (context, config) {
           config = config as CarouselConfig;
-          return FutureBuilder(
-              future: config.futureContentList,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  config.contentList = snapshot.data ?? [];
-                  return Carousel.fromConfig(config as CarouselConfig);
-                } else {
-                  return const Text('Loading');
-                }
-              });
+          return ContentBuilder.getFutureWidgetBuilder(
+            config,
+            (snapshot) => Carousel.fromConfig(config),
+          );
         };
       case COMPONENT_INDEX.grid:
         return (context, config) {
           config as GridConfig;
-          return FutureBuilder(
-              future: config.futureContentList,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  config.contentList = snapshot.data ?? [];
-                  return Grid.fromConfig(config);
-                } else {
-                  return const Text('Loading');
-                }
-              });
+          return ContentBuilder.getFutureWidgetBuilder(
+            config,
+            (snapshot) => Grid.fromConfig(config),
+          );
         };
       case COMPONENT_INDEX.blurb:
         return (context, config) {
           config as BlurbConfig;
-          return FutureBuilder(
-              future: config.futureContentList,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  config.contentList = snapshot.data ?? [];
-                  return Blurb.fromConfig(config);
-                } else {
-                  return const Text('Loading');
-                }
-              });
+          return ContentBuilder.getFutureWidgetBuilder(
+            config,
+            (snapshot) => Blurb.fromConfig(config),
+          );
         };
       default:
         return (context, config) {
