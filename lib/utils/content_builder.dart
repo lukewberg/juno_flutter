@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:juno_flutter/api/legacy_api.dart';
 import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/components/config/component_api_config.dart';
@@ -31,7 +32,11 @@ class ContentBuilder {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return Text('Loading...');
+          return const SizedBox(
+            width: 100,
+            height: 100,
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
       },
     );

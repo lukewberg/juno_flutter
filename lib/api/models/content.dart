@@ -36,6 +36,8 @@ class Content {
   final bool isActive;
   @JsonKey(name: 'content_featured', readValue: _stringToBool)
   final bool isFeatured;
+  @JsonKey(ignore: true)
+  late final List<BUCKETS>? buckets;
 
   Content(
       this.id,
@@ -55,7 +57,8 @@ class Content {
       this.isActive,
       this.isFeatured);
 
-factory Content.fromJsonLegacy(Map<String, dynamic> json) => _$ContentFromJson(json);
+  factory Content.fromJsonLegacy(Map<String, dynamic> json) =>
+      _$ContentFromJson(json);
 
   factory Content.fromJson(Map<String, dynamic> json) =>
       _$ContentFromJson(json);
