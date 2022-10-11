@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/component_index_extension.dart';
 import 'package:juno_flutter/components/juno_appbar.dart';
+import 'package:juno_flutter/components/juno_bottombar.dart';
 import 'package:juno_flutter/router/navigation.dart';
 
 class ListPage extends StatelessWidget {
@@ -27,6 +28,7 @@ class ListPage extends StatelessWidget {
           return components[index];
         },
       ),
+      bottomNavigationBar: const JunoBottomBar(),
     );
   }
 }

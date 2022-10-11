@@ -11,9 +11,12 @@ class CarouselConfig extends ComponentConfig {
 
   final bool? hasArrows;
   final bool? hasDots;
+  final bool? isAutoPlay;
+  @JsonKey(name: 'fullwidthNoPadding')
+  final bool? isFullWidth;
 
   CarouselConfig(rawConfig, ComponentApiConfig apiConfig, this.title,
-      this.hasArrows, this.hasDots)
+      this.hasArrows, this.hasDots, this.isAutoPlay, this.isFullWidth)
       : super(rawConfig: rawConfig, apiConfig: apiConfig);
 
   factory CarouselConfig.fromJsonLegacy(Map<String, dynamic> json) =>

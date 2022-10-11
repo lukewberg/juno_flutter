@@ -8,10 +8,17 @@ class SquareSlide extends StatelessWidget {
   final String title;
   final String subtitle;
   final String? image;
+  final bool rounded;
+  final bool? showTitle;
 
-  const SquareSlide(
-      {Key? key, required this.title, required this.subtitle, this.image})
-      : super(key: key);
+  const SquareSlide({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    this.image,
+    required this.rounded,
+    this.showTitle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class SquareSlide extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: const Color(0xff6F67AE),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(rounded ? 20 : 0),
             ),
             alignment: Alignment.center,
             child: Stack(

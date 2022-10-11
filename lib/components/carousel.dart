@@ -15,6 +15,7 @@ class Carousel extends StatefulWidget {
   final bool hasArrows;
   final bool hasDots;
   final ComponentApiConfig? apiConfig;
+  final bool isFullWidth;
 
   // final Map<String, dynamic> slideConfig;
 
@@ -24,6 +25,7 @@ class Carousel extends StatefulWidget {
       required this.hasArrows,
       required this.hasDots,
       required this.slides,
+      this.isFullWidth = false,
       this.apiConfig})
       : super(key: key);
 
@@ -33,11 +35,13 @@ class Carousel extends StatefulWidget {
       hasArrows: config.hasArrows ?? true,
       hasDots: config.hasDots ?? true,
       apiConfig: config.apiConfig,
+      isFullWidth: config.isFullWidth ?? false,
       slides: config.contentList
           .map((e) => SquareSlide(
                 title: e.name,
                 subtitle: e.description ?? '',
                 image: e.image,
+                rounded: !(config.isFullWidth ?? false),
               ))
           .toList(),
     );
@@ -83,14 +87,15 @@ class _CarouselState extends State<Carousel> {
           }).toList(),
           options: CarouselOptions(
             autoPlay: true,
-            enlargeCenterPage: true,
+            enlargeCenterPage: widget.isFullWidth ? false : true,
             pageSnapping: false,
             pauseAutoPlayOnTouch: true,
+            // aspectRatio: widget.isFullWidth ? 2.0 : 1.0,
             aspectRatio: 16 / 9,
             autoPlayCurve: Curves.fastOutSlowIn,
             enableInfiniteScroll: true,
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
-            viewportFraction: 0.75,
+            viewportFraction: widget.isFullWidth ? 1.0 : 0.8,
           ),
         ),
       ],
