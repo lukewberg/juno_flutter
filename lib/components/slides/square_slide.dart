@@ -74,17 +74,18 @@ class SquareSlide extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 10),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.black54,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-            fontSize: 18,
+        if (showTitle ?? true)
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: Colors.black54,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
-        ),
       ],
     );
   }

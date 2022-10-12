@@ -42,6 +42,7 @@ class Carousel extends StatefulWidget {
                 subtitle: e.description ?? '',
                 image: e.image,
                 rounded: !(config.isFullWidth ?? false),
+                showTitle: !(config.isFullWidth ?? false),
               ))
           .toList(),
     );
@@ -56,27 +57,32 @@ class _CarouselState extends State<Carousel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        if (!widget.isFullWidth)
+          Column(
             children: [
-              Flexible(
-                child: Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w700,
-                  ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        widget.title,
+                        style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              const SizedBox(height: 10),
             ],
           ),
-        ),
-        const SizedBox(height: 10),
         CarouselSlider(
           items: widget.slides.map((e) {
             return Builder(
