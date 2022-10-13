@@ -12,11 +12,11 @@ class JunoBottomBar extends StatefulWidget {
 class _JunoBottomBarState extends State<JunoBottomBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 65,
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 60, sigmaY: 60),
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 60, sigmaY: 60),
+        child: SafeArea(
+          maintainBottomViewPadding: true,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

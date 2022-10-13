@@ -92,7 +92,7 @@ class _CarouselState extends State<Carousel> {
             );
           }).toList(),
           options: CarouselOptions(
-            autoPlay: true,
+            autoPlay: false,
             enlargeCenterPage: widget.isFullWidth ? false : true,
             pageSnapping: false,
             pauseAutoPlayOnTouch: true,

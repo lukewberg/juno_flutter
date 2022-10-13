@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
+import 'package:juno_flutter/components/square_grid_item.dart';
 
 class Grid extends StatelessWidget {
   final String title;
@@ -12,9 +13,10 @@ class Grid extends StatelessWidget {
     return Grid(
       title: config.title,
       gridItems: config.contentList
-          .map((e) => Container(
-                color: Colors.red,
-                child: Text(e.name),
+          .map((e) => SquareGridItem(
+                title: e.name,
+                imageUrl: e.image ?? '',
+                subtitle: e.description,
               ))
           .toList(),
     );
@@ -22,8 +24,17 @@ class Grid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text('This is a grid'),
+    return Column(
+      children: [
+        Text(title),
+        GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          physics: const NeverScrollableScrollPhysics(),
+          primary: false,
+          children: gridItems,
+        ),
+      ],
     );
   }
 }
