@@ -22,11 +22,9 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const JunoAppbar(),
-      body: ListView.builder(
-        itemCount: components.length,
-        itemBuilder: (context, index) {
-          return components[index];
-        },
+      body: ListView(
+        addAutomaticKeepAlives: true,
+        children: components,
       ),
       bottomNavigationBar: const JunoBottomBar(),
     );

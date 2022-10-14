@@ -52,9 +52,10 @@ class Carousel extends StatefulWidget {
   State<Carousel> createState() => _CarouselState();
 }
 
-class _CarouselState extends State<Carousel> {
+class _CarouselState extends State<Carousel> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: [
         if (!widget.isFullWidth)
@@ -107,4 +108,7 @@ class _CarouselState extends State<Carousel> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

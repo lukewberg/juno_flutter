@@ -16,12 +16,31 @@ class SquareGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var s3Config = Provider.of<AppService>(context).appConfig.s3BucketUrl;
     return Container(
-      color: Colors.red,
+      decoration: BoxDecoration(
+        color: const Color(0xff6F67AE),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Column(
         children: [
-          // Image.network(imageUrl, errorBuilder: (context, error, stackTrace) {
-          //   return const Icon(Icons.error);
-          // }),
+          Expanded(
+            child: Image.network(
+              imageUrl,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.error);
+              },
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                );
+              },
+              fit: BoxFit.cover,
+            ),
+          ),
           Text(title),
           if (subtitle != null) Text(subtitle!),
         ],

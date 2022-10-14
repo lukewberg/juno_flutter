@@ -24,17 +24,22 @@ class Grid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(title),
-        GridView.count(
-          shrinkWrap: true,
-          crossAxisCount: 2,
-          physics: const NeverScrollableScrollPhysics(),
-          primary: false,
-          children: gridItems,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          Text(title),
+          GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            physics: const NeverScrollableScrollPhysics(),
+            primary: false,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            children: gridItems,
+          ),
+        ],
+      ),
     );
   }
 }
