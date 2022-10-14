@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
 
-import '../services/app_service.dart';
-
-class SquareGridItem extends StatelessWidget {
+class RoundGridItem extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String? subtitle;
 
-  const SquareGridItem(
+  const RoundGridItem(
       {Key? key, required this.title, required this.imageUrl, this.subtitle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var s3Config = Provider.of<AppService>(context).appConfig.s3BucketUrl;
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xff6F67AE),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Expanded(
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xff6F67AE),
+            borderRadius: BorderRadius.circular(200),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox.square(
+            dimension: 150,
             child: Image.network(
-              imageUrl,
+              Uri.parse(imageUrl).isAbsolute ? imageUrl : s3Config + imageUrl,
               errorBuilder: (context, error, stackTrace) {
                 return const Icon(Icons.error);
               },
@@ -38,13 +39,21 @@ class SquareGridItem extends StatelessWidget {
                   ),
                 );
               },
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
             ),
           ),
-          Text(title),
-          if (subtitle != null) Text(subtitle!),
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black54,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const Text('Subtitle'),
+      ],
     );
   }
 }

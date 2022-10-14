@@ -37,7 +37,7 @@ class Content {
   @JsonKey(name: 'content_featured', readValue: _stringToBool)
   final bool isFeatured;
   @JsonKey(ignore: true)
-  late final List<BUCKETS>? buckets;
+  late final BUCKETS bucket;
 
   Content(
       this.id,

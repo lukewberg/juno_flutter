@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/pages/list_page.dart';
 import 'package:juno_flutter/pages/login_page.dart';
 import 'package:juno_flutter/services/app_service.dart';
@@ -42,4 +43,17 @@ class AppRouter {
         }
         return null;
       });
+
+  void routeToContent(Content content) {
+    switch (content.bucket) {
+      case BUCKETS.Library:
+        // _navigation.goToHome();
+        break;
+      case BUCKETS.Lesson:
+        // _navigation.goToLogin();
+        break;
+      default:
+        // _navigation.goToHome();
+    }
+  }
 }
