@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/api/api.dart';
 import 'package:juno_flutter/api/legacy_api.dart';
-import 'package:juno_flutter/router/navigation.dart';
 
 typedef LoginCallback = void Function(bool success);
 

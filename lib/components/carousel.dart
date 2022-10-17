@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:juno_flutter/api/legacy_api.dart';
-import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/components/config/carousel_config.dart';
 import 'package:juno_flutter/components/config/component_api_config.dart';
 import 'package:juno_flutter/components/slides/square_slide.dart';
-import 'package:juno_flutter/utils/api_route.dart';
-import 'package:juno_flutter/utils/content_builder.dart';
-import 'package:juno_flutter/utils/request_type.dart';
 
 class Carousel extends StatefulWidget {
   List<Widget> slides;
@@ -40,7 +35,7 @@ class Carousel extends StatefulWidget {
           .map((e) => SquareSlide(
                 title: e.name,
                 subtitle: e.description ?? '',
-                image: e.image,
+                imageUrl: e.image,
                 rounded: !(config.isFullWidth ?? false),
                 showTitle: !(config.isFullWidth ?? false),
               ))

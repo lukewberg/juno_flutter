@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
 
@@ -24,23 +25,34 @@ class RoundGridItem extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: SizedBox.square(
             dimension: 150,
-            child: Image.network(
-              Uri.parse(imageUrl).isAbsolute ? imageUrl : s3Config + imageUrl,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.error);
-              },
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) return child;
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            child: imageUrl != ""
+                ? Image.network(
+                    Uri.parse(imageUrl).isAbsolute
+                        ? imageUrl
+                        : s3Config + imageUrl,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.error);
+                    },
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      );
+                    },
+                    fit: BoxFit.fitHeight,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: SvgPicture.asset(
+                      'assets/img/juno_logo.svg',
+                      color: Colors.white,
+                    ),
                   ),
-                );
-              },
-              fit: BoxFit.fitHeight,
-            ),
           ),
         ),
         const SizedBox(height: 10),

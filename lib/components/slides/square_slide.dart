@@ -1,92 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:juno_flutter/api/models/content.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
+
+typedef OnTap = void Function();
 
 class SquareSlide extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String? image;
+  final String? imageUrl;
   final bool rounded;
   final bool? showTitle;
+  final OnTap? onTap;
 
   const SquareSlide({
     Key? key,
     required this.title,
     required this.subtitle,
-    this.image,
+    this.imageUrl,
     required this.rounded,
     this.showTitle,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var s3Config = Provider.of<AppService>(context).appConfig.s3BucketUrl;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: const Color(0xff6F67AE),
-              borderRadius: BorderRadius.circular(rounded ? 20 : 0),
-            ),
-            alignment: Alignment.center,
-            child: Stack(
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                color: const Color(0xff6F67AE),
+                borderRadius: BorderRadius.circular(rounded ? 20 : 0),
+              ),
               alignment: Alignment.center,
-              children: [
-                image != null && image != ""
-                    ? SizedBox.expand(
-                        child: Image.network(
-                          // width: double.infinity,
-                          // height: double.infinity,
-                          Uri.parse(image!).isAbsolute
-                              ? image!
-                              : s3Config + image!,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
-                            );
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.block_outlined,
-                                color: Colors.white, size: 75);
-                          },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  imageUrl != null && imageUrl != ""
+                      ? SizedBox.expand(
+                          child: Image.network(
+                            // width: double.infinity,
+                            // height: double.infinity,
+                            Uri.parse(imageUrl!).isAbsolute
+                                ? imageUrl!
+                                : s3Config + imageUrl!,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                ),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.block_outlined,
+                                  color: Colors.white, size: 75);
+                            },
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: SvgPicture.asset(
+                            'assets/img/juno_logo.svg',
+                            color: Colors.white,
+                          ),
                         ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: SvgPicture.asset(
-                          'assets/img/juno_logo.svg',
-                          color: Colors.white,
-                        ),
-                      ),
-              ],
-            ),
-          ),
-        ),
-        if (showTitle ?? true)
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Colors.black54,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+                ],
               ),
             ),
           ),
-      ],
+          if (showTitle ?? true)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
