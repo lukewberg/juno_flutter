@@ -42,6 +42,7 @@ class AppRouter {
               ContentPage(
                 content: state.extra as Content,
               ),
+          name: APP_PAGE.content.name,
         )
       ],
       redirect: (state) {
@@ -54,6 +55,8 @@ class AppRouter {
       });
 
   void routeToContent(Content content) {
+    _router.goNamed(APP_PAGE.content.name, extra: content);
+    return;
     switch (content.bucket) {
       case BUCKETS.Library:
       // _navigation.goToHome();

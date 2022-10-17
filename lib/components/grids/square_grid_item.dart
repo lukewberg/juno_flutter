@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juno_flutter/components/image_helper.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
 
@@ -35,21 +36,10 @@ class SquareGridItem extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.network(
-                Uri.parse(imageUrl).isAbsolute ? imageUrl : s3Config + imageUrl,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.error);
-                },
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  );
-                },
+              child: ImageHelper(
+                imageUrl: Uri.parse(imageUrl).isAbsolute
+                    ? imageUrl
+                    : s3Config + imageUrl,
                 fit: BoxFit.fitHeight,
               ),
             ),

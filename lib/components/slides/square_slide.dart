@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:juno_flutter/components/image_helper.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
 
@@ -44,30 +45,12 @@ class SquareSlide extends StatelessWidget {
                 children: [
                   imageUrl != null && imageUrl != ""
                       ? SizedBox.expand(
-                          child: Image.network(
-                            // width: double.infinity,
-                            // height: double.infinity,
-                            Uri.parse(imageUrl!).isAbsolute
-                                ? imageUrl!
-                                : s3Config + imageUrl!,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                ),
-                              );
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.block_outlined,
-                                  color: Colors.white, size: 75);
-                            },
-                          ),
-                        )
+                          child: ImageHelper(
+                          imageUrl: Uri.parse(imageUrl!).isAbsolute
+                              ? imageUrl!
+                              : s3Config + imageUrl!,
+                          fit: BoxFit.cover,
+                        ))
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: SvgPicture.asset(

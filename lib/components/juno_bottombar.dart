@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:juno_flutter/components/nav_button.dart';
 
 class JunoBottomBar extends StatefulWidget {
   const JunoBottomBar({Key? key}) : super(key: key);
@@ -19,20 +20,11 @@ class _JunoBottomBarState extends State<JunoBottomBar> {
           maintainBottomViewPadding: true,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.home),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-              ),
-              IconButton(
-                splashColor: Colors.blue,
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-              ),
+            children: const [
+              NavButton(),
+              NavButton(),
+              NavButton(),
+              NavButton(),
             ],
           ),
         ),

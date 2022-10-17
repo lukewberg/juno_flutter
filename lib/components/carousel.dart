@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:juno_flutter/components/config/carousel_config.dart';
 import 'package:juno_flutter/components/config/component_api_config.dart';
 import 'package:juno_flutter/components/slides/square_slide.dart';
+import 'package:juno_flutter/router/app_router.dart';
+import 'package:provider/provider.dart';
 
 class Carousel extends StatefulWidget {
   List<Widget> slides;
@@ -24,7 +26,7 @@ class Carousel extends StatefulWidget {
       this.apiConfig})
       : super(key: key);
 
-  factory Carousel.fromConfig(CarouselConfig config) {
+  factory Carousel.fromConfig(BuildContext context, CarouselConfig config) {
     return Carousel(
       title: config.title ?? '',
       hasArrows: config.hasArrows ?? true,
@@ -38,6 +40,9 @@ class Carousel extends StatefulWidget {
                 imageUrl: e.image,
                 rounded: !(config.isFullWidth ?? false),
                 showTitle: !(config.isFullWidth ?? false),
+                onTap: () {
+                  Provider.of<AppRouter>(context).routeToContent(e);
+                },
               ))
           .toList(),
     );
@@ -47,7 +52,8 @@ class Carousel extends StatefulWidget {
   State<Carousel> createState() => _CarouselState();
 }
 
-class _CarouselState extends State<Carousel> with AutomaticKeepAliveClientMixin {
+class _CarouselState extends State<Carousel>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);

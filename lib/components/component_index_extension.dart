@@ -37,7 +37,7 @@ extension ComonentIndexExtension on COMPONENT_INDEX {
           config = config as CarouselConfig;
           return ContentBuilder.getFutureWidgetBuilder(
             config,
-            (snapshot) => Carousel.fromConfig(config),
+            (snapshot) => Carousel.fromConfig(context, config),
           );
         };
       case COMPONENT_INDEX.grid:
@@ -45,7 +45,7 @@ extension ComonentIndexExtension on COMPONENT_INDEX {
           config as GridConfig;
           return ContentBuilder.getFutureWidgetBuilder(
             config,
-            (snapshot) => Grid.fromConfig(config),
+            (snapshot) => Grid.fromConfig(context, config),
           );
         };
       case COMPONENT_INDEX.blurb:
@@ -53,7 +53,7 @@ extension ComonentIndexExtension on COMPONENT_INDEX {
           config as BlurbConfig;
           return ContentBuilder.getFutureWidgetBuilder(
             config,
-            (snapshot) => Blurb.fromConfig(config),
+            (snapshot) => Blurb.fromConfig(context, config),
           );
         };
       default:

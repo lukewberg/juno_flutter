@@ -15,7 +15,9 @@ class ListPage extends StatelessWidget {
       components.add(component.type.component(
           context, component.type.legacyConfig(component.rawConfig)));
     }
-    return ListPage(components: components);
+    return ListPage(components: [
+      ...components
+    ]);
   }
 
   @override
@@ -24,7 +26,9 @@ class ListPage extends StatelessWidget {
       appBar: const JunoAppbar(),
       body: ListView(
         addAutomaticKeepAlives: true,
-        children: components,
+        children: [
+          ...components
+        ],
       ),
       bottomNavigationBar: const JunoBottomBar(),
     );

@@ -36,7 +36,7 @@ class Content {
   final bool isActive;
   @JsonKey(name: 'content_featured', readValue: _stringToBool)
   final bool isFeatured;
-  @JsonKey(ignore: true)
+  @JsonKey(ignore: true, defaultValue: BUCKETS.Library)
   late final BUCKETS bucket;
 
   Content(

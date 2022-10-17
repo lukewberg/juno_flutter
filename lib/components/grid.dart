@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
 import 'package:juno_flutter/components/grids/round_grid_item.dart';
 import 'package:juno_flutter/components/grids/square_grid_item.dart';
+import 'package:juno_flutter/router/app_router.dart';
+import 'package:provider/provider.dart';
 
 class Grid extends StatelessWidget {
   final String title;
@@ -10,7 +12,7 @@ class Grid extends StatelessWidget {
   const Grid({Key? key, required this.title, required this.gridItems})
       : super(key: key);
 
-  factory Grid.fromConfig(GridConfig config) {
+  factory Grid.fromConfig(BuildContext context, GridConfig config) {
     return Grid(
       title: config.title,
       gridItems: config.contentList.map((e) {
@@ -25,6 +27,9 @@ class Grid extends StatelessWidget {
             title: e.name,
             imageUrl: e.image ?? '',
             subtitle: e.description,
+            onTap: () {
+              Provider.of<AppRouter>(context, listen: false).routeToContent(e);
+            },
           );
         }
       }).toList(),
