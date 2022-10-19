@@ -20,11 +20,7 @@ class _JunoAppbarState extends State<JunoAppbar> {
             color: Color(0xff271836),
             boxShadow: [
               BoxShadow(
-                color: Colors.black,
-                blurRadius: 10.0,
-                spreadRadius: 0.0,
-                offset: Offset(0.0, 0.0), // shadow direction: bottom right
-              )
+                  blurRadius: 10, color: Colors.black26, offset: Offset(0, 7))
             ],
             gradient: LinearGradient(
                 begin: Alignment.bottomLeft,

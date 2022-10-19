@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SafeArea(
           child: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
