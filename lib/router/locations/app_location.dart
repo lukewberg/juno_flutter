@@ -14,7 +14,6 @@ class AppLocation extends BeamLocation<BeamState> {
           ChangeNotifierProvider<AuthService>(create: (_) => AuthService()),
           ChangeNotifierProvider<AppService>(create: (_) => AppService()),
           Provider(create: (_) => AppRouter(AppService(), AuthService())),
-          Provider(create: (_) => Navigation()),
         ],
         child: navigator,
       );

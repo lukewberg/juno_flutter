@@ -27,7 +27,7 @@ class _JunoBottomBarState extends State<JunoBottomBar> {
                     blurRadius: 10, color: Colors.black26, offset: Offset(0, 7))
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,

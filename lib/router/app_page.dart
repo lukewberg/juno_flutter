@@ -4,5 +4,6 @@ enum APP_PAGE {
   home,
   chat,
   content,
-  live
+  live,
+  app
 }

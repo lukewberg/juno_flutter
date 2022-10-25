@@ -3,7 +3,8 @@ import 'package:juno_flutter/router/app_page.dart';
 extension AppPageExtension on APP_PAGE {
   String get path {
     switch (this) {
-
+      case APP_PAGE.app:
+        return '/app';
       case APP_PAGE.splash:
         return '/splash';
       case APP_PAGE.login:

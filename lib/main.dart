@@ -26,8 +26,32 @@ class _MyAppState extends State<MyApp> {
   late AuthService authService;
   late AppRouter appRouter;
 
+  final beamer = BeamerDelegate(
+    initialPath: APP_PAGE.app.path,
+    locationBuilder: BeamerLocationBuilder(
+      beamLocations: [
+        LoginLocation(),
+        AppLocation(),
+      ],
+    ),
+    routeListener: (context, state) {
+      print('routeListener: ${state.currentBeamLocation}');
+    },
+    guards: [
+      BeamGuard(
+        pathPatterns: ['/app'],
+        check: (context, location) => context.read<AuthService>().isAuthed,
+        beamToNamed: (origin, target) {
+          print('beamToNamed: $origin, $target');
+          return APP_PAGE.login.path;
+        },
+      ),
+    ],
+  );
+
   @override
   void initState() {
+    super.initState();
     appService = AppService();
     authService = AuthService();
     appRouter = AppRouter(appService, authService);
@@ -36,27 +60,6 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final beamer = BeamerDelegate(
-      locationBuilder: BeamerLocationBuilder(
-        beamLocations: [
-          LoginLocation(),
-          AppLocation(),
-        ],
-      ),
-      routeListener: (context, state) {
-        print('routeListener: ${state.currentBeamLocation}');
-      },
-      guards: [
-        BeamGuard(
-          pathPatterns: ['/app'],
-          check: (context, location) => context.read<AuthService>().isAuthed,
-          beamToNamed: (origin, target) {
-            print('beamToNamed: $origin, $target');
-            return APP_PAGE.login.path;
-          },
-        ),
-      ],
-    );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (_) => authService),
