@@ -1,15 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:juno_flutter/components/component_index.dart';
 
 import 'app_page.dart';
 
-class Navigation {
-  final List<NavItem>? routes;
+class Navigation with ChangeNotifier{
+  static final Navigation _instance = Navigation._internal();
+  List<NavItem>? _routes;
+
+  set routes(List<NavItem>? value) {
+    _routes = value;
+    notifyListeners();
+  }
+
+  List<NavItem>? get routes => _routes;
 
   NavItem getNavItem(String path) {
     return routes!.firstWhere((element) => element.route == path);
   }
 
-  Navigation({this.routes});
+  factory Navigation({List<NavItem>? routes}) {
+    _instance.routes = routes;
+    return _instance;
+  }
+
+  Navigation._internal();
+
 }
 
 class NavItem {

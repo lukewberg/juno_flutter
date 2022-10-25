@@ -1,6 +1,10 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:juno_flutter/components/juno_appbar.dart';
+import 'package:juno_flutter/router/app_page.dart';
+import 'package:juno_flutter/router/app_page_extension.dart';
+import 'package:juno_flutter/router/locations/app_location.dart';
+import 'package:juno_flutter/router/locations/login_location.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:juno_flutter/services/auth_service.dart';
 import 'package:juno_flutter/router/app_router.dart';
@@ -20,50 +24,67 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppService appService;
   late AuthService authService;
+  late AppRouter appRouter;
 
   @override
   void initState() {
     appService = AppService();
     authService = AuthService();
+    appRouter = AppRouter(appService, authService);
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final beamer = BeamerDelegate(
+      locationBuilder: BeamerLocationBuilder(
+        beamLocations: [
+          LoginLocation(),
+          AppLocation(),
+        ],
+      ),
+      routeListener: (context, state) {
+        print('routeListener: ${state.currentBeamLocation}');
+      },
+      guards: [
+        BeamGuard(
+          pathPatterns: ['/app'],
+          check: (context, location) => context.read<AuthService>().isAuthed,
+          beamToNamed: (origin, target) {
+            print('beamToNamed: $origin, $target');
+            return APP_PAGE.login.path;
+          },
+        ),
+      ],
+    );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>(create: (_) => authService),
         ChangeNotifierProvider<AppService>(create: (_) => appService),
         Provider(create: (_) => AppRouter(appService, authService))
       ],
-      child: Builder(
-        builder: (context) {
-          final GoRouter goRouter =
-              Provider.of<AppRouter>(context, listen: false).router;
-          return MaterialApp.router(
-              routerDelegate: goRouter.routerDelegate,
-              routeInformationParser: goRouter.routeInformationParser,
-              routeInformationProvider: goRouter.routeInformationProvider,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                // This is the theme of your application.
-                //
-                // Try running your application with "flutter run". You'll see the
-                // application has a blue toolbar. Then, without quitting the app, try
-                // changing the primarySwatch below to Colors.green and then invoke
-                // "hot reload" (press "r" in the console where you ran "flutter run",
-                // or simply save your changes to "hot reload" in a Flutter IDE).
-                // Notice that the counter didn't reset back to zero; the application
-                // is not restarted.
-                primarySwatch: Colors.blue,
-                fontFamily: 'NunitoSans',
-              ));
-        },
+      child: MaterialApp.router(
+        routerDelegate: beamer,
+        routeInformationParser: BeamerParser(),
+        backButtonDispatcher: BeamerBackButtonDispatcher(delegate: beamer),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+          fontFamily: 'NunitoSans',
+        ),
       ),
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);

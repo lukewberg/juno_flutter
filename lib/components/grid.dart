@@ -1,7 +1,10 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/config/grid_config.dart';
 import 'package:juno_flutter/components/grids/round_grid_item.dart';
 import 'package:juno_flutter/components/grids/square_grid_item.dart';
+import 'package:juno_flutter/router/app_page.dart';
+import 'package:juno_flutter/router/app_page_extension.dart';
 import 'package:juno_flutter/router/app_router.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +31,7 @@ class Grid extends StatelessWidget {
             imageUrl: e.image ?? '',
             subtitle: e.description,
             onTap: () {
-              Provider.of<AppRouter>(context, listen: false).routeToContent(e);
+              context.beamToNamed(APP_PAGE.content.path, data: e);
             },
           );
         }

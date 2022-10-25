@@ -4,11 +4,20 @@ import 'package:juno_flutter/components/component_index_extension.dart';
 import 'package:juno_flutter/router/navigation.dart';
 
 class AppService with ChangeNotifier {
+  static final AppService _instance = AppService._internal();
   bool _isDarkMode = false;
   late AppConfig _appConfig;
 
   bool get isDarkMode => _isDarkMode;
   AppConfig get appConfig => _appConfig;
+
+  factory AppService() {
+    return _instance;
+  }
+
+  AppService._internal() {
+    _appConfig = AppConfig('');
+  }
 
   set isDarkMode(bool value) {
     _isDarkMode = value;

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:juno_flutter/components/nav_button.dart';
 
 class JunoBottomBar extends StatefulWidget {
-  const JunoBottomBar({Key? key}) : super(key: key);
+  final int currentIndex;
+
+  const JunoBottomBar({Key? key, required this.currentIndex}) : super(key: key);
 
   @override
   State<JunoBottomBar> createState() => _JunoBottomBarState();

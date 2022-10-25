@@ -1,10 +1,11 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:juno_flutter/components/config/carousel_config.dart';
 import 'package:juno_flutter/components/config/component_api_config.dart';
 import 'package:juno_flutter/components/slides/square_slide.dart';
-import 'package:juno_flutter/router/app_router.dart';
-import 'package:provider/provider.dart';
+import 'package:juno_flutter/router/app_page.dart';
+import 'package:juno_flutter/router/app_page_extension.dart';
 
 class Carousel extends StatefulWidget {
   List<Widget> slides;
@@ -41,7 +42,7 @@ class Carousel extends StatefulWidget {
                 rounded: !(config.isFullWidth ?? false),
                 showTitle: !(config.isFullWidth ?? false),
                 onTap: () {
-                  Provider.of<AppRouter>(context).routeToContent(e);
+                  context.beamToNamed(APP_PAGE.content.path, data: e);
                 },
               ))
           .toList(),

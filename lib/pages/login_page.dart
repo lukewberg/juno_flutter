@@ -1,13 +1,11 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:juno_flutter/components/action_button.dart';
 import 'package:juno_flutter/components/text_input.dart';
 import 'package:juno_flutter/router/app_router.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:juno_flutter/services/auth_service.dart';
-import 'package:juno_flutter/router/app_page.dart';
-import 'package:juno_flutter/router/app_page_extension.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -83,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                             .appConfig = authResult.config;
                         Provider.of<AppRouter>(context, listen: false).nav =
                             authResult.navigation;
-                        context.goNamed(APP_PAGE.home.name);
+                        Beamer.of(context).beamToNamed('/app');
                       });
                     } else {
                       return Future.value();
