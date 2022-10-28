@@ -6,11 +6,11 @@ import 'package:juno_flutter/pages/list_page.dart';
 import 'package:juno_flutter/router/app_page.dart';
 import 'package:juno_flutter/router/app_page_extension.dart';
 import 'package:juno_flutter/router/app_router.dart';
-import 'package:juno_flutter/router/navigation.dart';
 import 'package:juno_flutter/services/app_service.dart';
 import 'package:provider/provider.dart';
 
 class HomeLocation extends BeamLocation<BeamState> {
+  HomeLocation(RouteInformation routeInformation) : super(routeInformation);
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     var navigation = Provider.of<AppRouter>(context, listen: false).nav;
@@ -26,13 +26,13 @@ class HomeLocation extends BeamLocation<BeamState> {
           ],
         ),
       ),
-      // if (state.pathParameters.containsKey('content'))
-      //   BeamPage(
-      //     key: ValueKey('content_page-${DateTime.now()}'),
-      //     child: ContentPage(
-      //       content: data as Content,
-      //     ),
-      //   ),
+      if (state.pathParameters.containsKey('content'))
+        BeamPage(
+          key: ValueKey('content_page-${DateTime.now()}'),
+          child: ContentPage(
+            content: data as Content,
+          ),
+        ),
     ];
   }
 

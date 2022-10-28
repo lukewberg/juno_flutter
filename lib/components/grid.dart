@@ -5,8 +5,6 @@ import 'package:juno_flutter/components/grids/round_grid_item.dart';
 import 'package:juno_flutter/components/grids/square_grid_item.dart';
 import 'package:juno_flutter/router/app_page.dart';
 import 'package:juno_flutter/router/app_page_extension.dart';
-import 'package:juno_flutter/router/app_router.dart';
-import 'package:provider/provider.dart';
 
 class Grid extends StatelessWidget {
   final String title;

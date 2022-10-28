@@ -18,10 +18,11 @@ class _AppScaffoldState extends State<AppScaffold> {
     BeamerDelegate(
       initialPath: APP_PAGE.home.path,
       locationBuilder: (routeInformation, _) {
-        return HomeLocation();
+        return HomeLocation(routeInformation);
       }
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

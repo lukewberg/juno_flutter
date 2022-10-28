@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
         LoginLocation(),
-        AppLocation(),
+        AppLocation(RouteInformation(location: APP_PAGE.app.path)),
       ],
     ),
     routeListener: (context, state) {
